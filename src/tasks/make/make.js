@@ -1,6 +1,6 @@
 const cmd = require('../shared/cmd');
 const makeComponent = require('./make-component/make-component');
-const makeConfig = require('./make-config/make-config');
+const makeOther = require('./make-other/make-other');
 
 /**
  * Scaffold something
@@ -13,5 +13,14 @@ module.exports = (type = 'component', name = '') => {
 		makeComponent(name);
 
 	if (type === 'config')
-		makeConfig(name);
+		makeOther({
+			name,
+			only: ['.snowConfig.json'],
+		});
+
+	if (type === 'lint-files')
+		makeOther({
+			name,
+			exclude: ['.snowConfig.json'],
+		});
 };

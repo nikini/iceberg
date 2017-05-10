@@ -44,8 +44,9 @@ program
 		console.log();
 		console.log('    $ pasnow make visualization -t component');
 		console.log('    $ pasnow make highcharts --type component');
+		console.log('    $ pasnow make not-important --type lint-files');
 		console.log();
-		console.log('  For type you can use: [component]');
+		console.log('  For type you can use: [component, config, lint-files]');
 		console.log();
 	});
 

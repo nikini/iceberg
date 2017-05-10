@@ -21,7 +21,7 @@ module.exports = (name = '') => {
 	});
 
 	const templateDir = path.join(__dirname, 'template', 'component');
-	shell.ls(templateDir).forEach((file) => {
+	shell.ls('-A', templateDir).forEach((file) => {
 		// Copy the file (as is)
 		const compiledFileName = file.replace(/_dashName_/g, data.dashName);
 		const fileDestination = path.join(destination, compiledFileName);
