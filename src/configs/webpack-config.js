@@ -1,11 +1,13 @@
 const path = require('path');
-const cmd = require('../shared/cmd');
-const getConfig = require('../shared/get-config');
 const shell = require('shelljs');
+const precss = require('precss');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
-const precss = require('precss');
 const SassLintPlugin = require('sasslint-webpack-plugin');
+
+const cmd = require('../tasks/shared/cmd');
+const getConfig = require('../tasks/shared/get-config');
+
 const excludePath = /(node_modules|bower_components)/;
 
 /**

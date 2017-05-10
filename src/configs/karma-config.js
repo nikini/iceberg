@@ -1,5 +1,5 @@
 const webpackConfig = require('./webpack-config.js');
-const getConfig = require('../shared/get-config');
+const getConfig = require('../tasks/shared/get-config');
 const path = require('path');
 
 /**
