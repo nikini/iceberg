@@ -1,0 +1,63 @@
+{
+  "name": "servicenow-pa-tools",
+  "version": "0.0.1",
+  "description": "ServiceNow PA Team Tools for the command line",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint .",
+    "validate": "npm ls"
+  },
+  "author": "Ciprian Mocanu <ciprian.mocanu@servicenow.com>",
+  "license": "MIT",
+  "bin": {
+    "pasnow": "./index.js"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel": "^6.23.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "child_process": "^1.0.2",
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "css-loader": "^0.27.3",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-loader": "^1.7.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
+    "gaze": "^1.1.2",
+    "html-loader": "^0.4.5",
+    "htmlhint-loader": "^1.1.2",
+    "jasmine-core": "^2.6.1",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha-reporter": "^2.2.3",
+    "karma-webpack": "^2.0.3",
+    "lodash": "^4.17.4",
+    "ngtemplate-loader": "^1.3.1",
+    "node-sass": "^4.5.1",
+    "node-sass-json-importer": "^3.0.2",
+    "postcss-loader": "^1.3.3",
+    "precommit-hook": "^3.0.0",
+    "precss": "^1.4.0",
+    "request": "^2.81.0",
+    "sass-lint": "^1.10.2",
+    "sass-loader": "^6.0.3",
+    "sasslint-webpack-plugin": "^1.0.4",
+    "shelljs": "^0.7.7",
+    "source-map-loader": "^0.2.0",
+    "style-loader": "^0.16.0",
+    "underscore.string": "^3.3.4",
+    "webpack": "^2.3.2"
+  },
+  "pre-commit": [
+    "lint",
+    "validate",
+    "test"
+  ]
+}
