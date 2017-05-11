@@ -5,9 +5,10 @@ const make = require('./src/tasks/make/make');
 const build = require('./src/tasks/build/build');
 const init = require('./src/tasks/init/init');
 const remove = require('./src/tasks/remove/remove');
+const currentPackage = require('./package.json');
 
 program
-	.version('0.0.1');
+	.version(currentPackage.version);
 
 program
 	.command('watch')

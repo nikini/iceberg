@@ -26,6 +26,17 @@ module.exports = {
 	},
 
 	/**
+	 * Console warn arguments
+	 */
+	warn(...args) {
+		const parameters = args.map((param) => {
+			return colors.yellow(param);
+		});
+		parameters.unshift(now());
+		console.warn.apply(console, parameters);
+	},
+
+	/**
 	 * Run a function, count how long it takes and log the ending
 	 *
 	 * @param  {Function} callback

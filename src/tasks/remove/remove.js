@@ -1,5 +1,6 @@
 const path = require('path');
 const shell = require('shelljs');
+const inquirer = require('inquirer');
 const cmd = require('../shared/cmd');
 const exec = require('child_process').exec;
 const packageConfig = require('../shared/package-config');
@@ -16,7 +17,7 @@ module.exports = () => {
 		cwdPackageConfig.devDependencies = {};
 
 	if (!cwdPackageConfig.devDependencies.pasnow) {
-		cmd.error('Good news/bad news: "pasnow" doesn\'t exists as a dev dependency.');
+		cmd.error('Good news/Bad news: "pasnow" doesn\'t exists as a dev dependency.');
 		return;
 	}
 
@@ -36,7 +37,24 @@ module.exports = () => {
 			return;
 		}
 		console.log(stdout);
-		cmd.log('Succesfully removed "pasnow" in current directory');
-		cmd.log('You can also remove the configuration file now (.snowConfig.json)');
+
+		const questions = [{
+			name: 'removeConfig',
+			type: 'confirm',
+			message: 'Would you like to remove the configuration, as well?',
+			default: false,
+		}];
+
+		const prompt = inquirer.createPromptModule();
+		prompt(questions).then((answers) => {
+			if (answers.removeConfig) {
+				const configPath = path.join(process.cwd(), '.snowConfig.json');
+				if (shell.test('-e', configPath))
+					shell.rm(configPath);
+				else
+					cmd.warn('No configuration file found');
+			}
+			cmd.log('Succesfully removed "pasnow" in current directory');
+		});
 	});
 };

@@ -1,6 +1,6 @@
 {
   "name": "pasnow",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ServiceNow PA Team Tools for the command line",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "gaze": "^1.1.2",
     "html-loader": "^0.4.5",
     "htmlhint-loader": "^1.1.2",
+    "inquirer": "^3.0.6",
     "jasmine-core": "^2.6.1",
     "karma": "^1.6.0",
     "karma-chrome-launcher": "^2.0.0",

@@ -1,6 +1,8 @@
 const path = require('path');
 const shell = require('shelljs');
+const inquirer = require('inquirer');
 const cmd = require('../shared/cmd');
+const make = require('../make/make');
 const exec = require('child_process').exec;
 const packageConfig = require('../shared/package-config');
 const currentPackage = require('../../../package.json');
@@ -36,7 +38,24 @@ module.exports = () => {
 			return;
 		}
 		console.log(stdout);
+
+		const questions = [{
+			name: 'name',
+			message: 'What is the name of your project?',
+			validate(input) {
+				return new Promise((accept, reject) => {
+					if (!input.trim())
+						reject('The name cannot be empty');
+					accept();
+				});
+			},
+		}];
+
+		const prompt = inquirer.createPromptModule();
+		prompt(questions).then((answers) => {
+			make('config', answers.name);
+		});
+
 		cmd.log('Succesfully installed "pasnow" in current directory');
-		cmd.log('Please create a configuration file now by running `pasnow make PA --type config`');
 	});
 };
