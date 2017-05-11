@@ -1,12 +1,10 @@
 {
-  "name": "servicenow-pa-tools",
+  "name": "pasnow",
   "version": "0.0.1",
   "description": "ServiceNow PA Team Tools for the command line",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "jshint .",
-    "validate": "npm ls"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ciprian Mocanu <ciprian.mocanu@servicenow.com>",
   "license": "MIT",
@@ -15,7 +13,6 @@
   },
   "dependencies": {
     "autoprefixer": "^6.7.7",
-    "babel": "^6.23.0",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.24.1",
@@ -55,9 +52,5 @@
     "underscore.string": "^3.3.4",
     "webpack": "^2.3.2"
   },
-  "pre-commit": [
-    "lint",
-    "validate",
-    "test"
-  ]
+  "devDependencies": {}
 }

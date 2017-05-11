@@ -3,6 +3,8 @@ const program = require('commander');
 const watch = require('./src/tasks/watch/watch');
 const make = require('./src/tasks/make/make');
 const build = require('./src/tasks/build/build');
+const init = require('./src/tasks/init/init');
+const remove = require('./src/tasks/remove/remove');
 
 program
 	.version('0.0.1');
@@ -55,6 +57,20 @@ program
 	.description('Builds the JS for production')
 	.action(() => {
 		build();
+	});
+
+program
+	.command('init')
+	.description('Initializes pasnow in the current project (must have a package.json)')
+	.action(() => {
+		init();
+	});
+
+program
+	.command('remove')
+	.description('Removes pasnow from the current project (must have a package.json)')
+	.action(() => {
+		remove();
 	});
 
 program.parse(process.argv);
