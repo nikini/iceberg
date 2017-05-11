@@ -36,7 +36,7 @@ program
 	});
 
 program
-	.command('make <name>')
+	.command('make [name]')
 	.description('Scaffolding tool to make components etc')
 	.option('-t, --type <type>', 'What do you want to scaffold (eg: component)')
 	.action((name, options) => {
@@ -47,7 +47,7 @@ program
 		console.log();
 		console.log('    $ pasnow make visualization -t component');
 		console.log('    $ pasnow make highcharts --type component');
-		console.log('    $ pasnow make not-important --type lint-files');
+		console.log('    $ pasnow make -t lint-files');
 		console.log();
 		console.log('  For type you can use: [component, config, lint-files]');
 		console.log();

@@ -3,12 +3,11 @@ const shell = require('shelljs');
 const precss = require('precss');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const jsonImporter = require('node-sass-json-importer');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 
 const cmd = require('../tasks/shared/cmd');
 const getConfig = require('../tasks/shared/get-config');
-
-const excludePath = /(node_modules|bower_components)/;
 
 /**
  * Function that spits out the webpack config
@@ -18,15 +17,17 @@ const excludePath = /(node_modules|bower_components)/;
  * @return {Object}
  */
 module.exports = (options = {}) => {
+	const excludePath = /(node_modules|bower_components)/;
 	const configuration = getConfig();
 	const scssPath = path.resolve(configuration.sassPath);
-	const jsPath = configuration.modulePath;
+	const jsPath = path.resolve(configuration.modulePath);
 	const entry = path.join(path.resolve(jsPath), configuration.entry);
+	const outputPath = path.resolve(configuration.outputPath);
 
 	const plugins = [
 		new SassLintPlugin({
 			configFile: '.sass-lint.yml',
-			glob: 'src/**/*.s?(a|c)ss',
+			glob: `${scssPath}/**/*.s?(a|c)ss`,
 		}),
 	];
 
@@ -55,7 +56,7 @@ module.exports = (options = {}) => {
 			entry,
 		],
 		output: {
-			path: configuration.outputPath,
+			path: outputPath,
 			filename: configuration.outputName || '[name].bundle.js',
 		},
 		resolve: {
@@ -121,7 +122,8 @@ module.exports = (options = {}) => {
 						loader: 'sass-loader',
 						options: {
 							sourceMap: true,
-							includePaths: [scssPath],
+							importer: [jsonImporter],
+							includePaths: [scssPath, jsPath],
 						},
 					}],
 				},

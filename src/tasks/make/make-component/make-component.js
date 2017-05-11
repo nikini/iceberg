@@ -11,6 +11,10 @@ const template = require('lodash/template');
  * @param  {string} name
  */
 module.exports = (name = '') => {
+	if (!name) {
+		cmd.error('You must provide a component name');
+		return;
+	}
 	const data = getComponentDataFromName(name);
 
 	const destination = path.join(process.cwd(), data.dirName);

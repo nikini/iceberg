@@ -1,0 +1,11 @@
+{
+	"v2": {
+		"name": "<%= name %>",
+		"sassPath": "<%= sassPath %>",
+		"modulePath": "<%= modulePath %>",
+		"entry": "<%= entry %>",
+		"outputPath": "<%= outputPath %>",
+		"outputName": "[name].bundle.js",
+		"extraKarmaFiles": []
+	}
+}

@@ -1,24 +1,29 @@
 const webpackConfig = require('./webpack-config.js');
 const getConfig = require('../tasks/shared/get-config');
 const path = require('path');
+const config = require('karma').config;
 
 /**
  * Function that spits out the karma config
  *
- * @param  {Object} [options={}]
+ * @param  {Boolean} [single=false]
  *
  * @return {Object}
  */
-module.exports = (config) => {
+module.exports = (single = false) => {
 	const configuration = getConfig();
-	const filesPath = path.join(configuration.modulePath, '**/*-spec.js');
+	const modulePath = path.resolve(configuration.modulePath);
+	const filesPath = path.join(modulePath, '**/*-spec.js');
 	const karmaFiles = configuration.extraKarmaFiles;
+
+	const preprocessors = {};
+	preprocessors[filesPath] = ['webpack'];
 
 	karmaFiles.push(filesPath);
 
-	config.set({
+	return {
 		// base path that will be used to resolve all patterns (eg. files, exclude)
-		basePath: configuration.modulePath,
+		basePath: modulePath,
 
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -33,9 +38,7 @@ module.exports = (config) => {
 
 		// preprocess matching files before serving them to the browser
 		// available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-		preprocessors: {
-			filesPath: ['webpack'],
-		},
+		preprocessors,
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
@@ -61,7 +64,7 @@ module.exports = (config) => {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: false,
+		singleRun: single,
 
 		// Concurrency level
 		// how many browser should be started simultaneous
@@ -75,5 +78,5 @@ module.exports = (config) => {
 		},
 
 		webpack: webpackConfig(),
-	});
+	};
 };
