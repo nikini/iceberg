@@ -2,11 +2,11 @@ const spawn = require('child_process').spawn;
 const cmd = require('../shared/cmd');
 
 /**
- * Clears the cache
+ * Compiles maven and then runs the callback
  *
- * @param  {string} source
+ * @param  {function} callback
  */
-module.exports = () => {
+module.exports = (callback = false) => {
 	cmd.log('Starting maven compile');
 	const command = spawn('mvn', ['compile']);
 
@@ -17,7 +17,10 @@ module.exports = () => {
 	command.on('close', (code) => {
 		if (code > 0)
 			cmd.error(`Maven compile exited with code ${code}`);
-		else
+		else {
+			if (typeof callback === 'function')
+				callback();
 			cmd.log('Maven compile finished');
+		}
 	});
 };

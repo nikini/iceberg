@@ -1,5 +1,6 @@
 const Gaze = require('gaze').Gaze;
 const cmd = require('../shared/cmd');
+const livereload = require('livereload');
 
 // Tasks
 const mavenCompile = require('./maven-compile');
@@ -20,6 +21,9 @@ module.exports = (options = {}, onChange) => {
 
 	cmd.log('Starting watch');
 
+	// Variable used by livereload later, if needed
+	let livereloadServer;
+
 	const gaze = new Gaze(configuration.watchPaths);
 	gaze.on('ready', (watcher) => {
 		cmd.log('Watch started');
@@ -30,6 +34,12 @@ module.exports = (options = {}, onChange) => {
 		'js', 'map', 'json', 'html', 'css', 'xml',
 		'png', 'jpg', 'jpeg', 'gif', 'svg',
 	];
+
+	// Start the livereload
+	if (options.exclude.indexOf('livereload') < 0) {
+		livereloadServer = livereload.createServer();
+		livereloadServer.watch(process.cwd());
+	}
 
 	// Start the webpack watch
 	if (options.exclude.indexOf('webpack') < 0)
@@ -43,18 +53,22 @@ module.exports = (options = {}, onChange) => {
 	gaze.on('all', (eventType, filepath) => {
 		const extension = filepath.split('.').pop();
 
-		console.log(configuration.targetPath, configuration.copyPath);
-
 		// Copy the file
 		if (options.exclude.indexOf('resources') < 0 && resourcesExtensions.indexOf(extension) >= 0)
 			copyFile(filepath, configuration.targetPath, configuration.copyPath);
 
 		// Clear the cache if the changed file is an xml file
 		if (options.exclude.indexOf('cache') < 0 && extension === 'xml')
-			cacheClear(options.host, options.port);
+			cacheClear(() => {
+				if (options.exclude.indexOf('livereload') < 0)
+					livereloadServer.refresh('*');
+			}, options.host, options.port);
 
 		// Compile if the changed file is a JAVA file
 		if (options.exclude.indexOf('java') < 0 && extension === 'java')
-			mavenCompile();
+			mavenCompile(() => {
+				if (options.exclude.indexOf('livereload') < 0)
+					livereloadServer.refresh('*');
+			});
 	});
 };

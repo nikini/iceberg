@@ -29,7 +29,7 @@ program
 		console.log('    $ pasnow watch --exclude resources,cache,java');
 		console.log('    $ pasnow watch -s');
 		console.log();
-		console.log('  For include/exclude you can use: [cache, java, resources, webpack, karma]');
+		console.log('  For exclude you can use: [cache, java, resources, webpack, karma, livereload]');
 		console.log();
 	});
 
