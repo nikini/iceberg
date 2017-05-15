@@ -21,7 +21,7 @@ $ pasnow init
 
 ## Watch
 
-The watch starts the webpack watch, karma watch and the resources copy. You can choose to ignore: `cache`, `java`, `resources`.
+The watch starts the webpack watch, karma watch and the resources copy. You can choose to ignore: `cache`, `java`, `resources`, `webpack`, `karma`.
 
 ```
 $ pasnow watch
@@ -31,7 +31,6 @@ The options for the watch are:
 
 ```
  -h, --help                outputs the usage information
- -i, --include <packages>  what packages to include (separated by comma)
  -e, --exclude <packages>  what packages to exclude (separated by comma)
  -s, --single              if included, it will run once and exit
 ```
@@ -39,8 +38,9 @@ The options for the watch are:
 #### Examples
 
 ```
-$ pasnow watch -i cache
+$ pasnow watch --e karma,webpack
 $ pasnow watch --exclude resources,cache
+$ pasnow watch -s
 ```
 
 ## Make

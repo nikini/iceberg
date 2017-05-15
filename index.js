@@ -13,14 +13,11 @@ program
 program
 	.command('watch')
 	.description('Watch files, copy resources, build SASS and JS (if needed)')
-	.option('-i, --include <package,package>', 'What to include (if not already included)')
 	.option('-e, --exclude <package,package>', 'What to exclude (if not already excluded)')
 	.option('-s, --single', 'Run once and then exit (webpack and karma)')
 	.action((options) => {
 		watch({
-			baseLocation: './tasks/**/*.js',
 			exclude: (options.exclude || '').split(','),
-			include: (options.include || '').split(','),
 			single: Boolean(options.single),
 		});
 	})
@@ -28,10 +25,11 @@ program
 		console.log('  Examples:');
 		console.log();
 		console.log('    $ pasnow watch');
-		console.log('    $ pasnow watch -i cache');
+		console.log('    $ pasnow watch -e karma,webpack');
 		console.log('    $ pasnow watch --exclude resources,cache,java');
+		console.log('    $ pasnow watch -s');
 		console.log();
-		console.log('  For include/exclude you can use: [cache, java, resources]');
+		console.log('  For include/exclude you can use: [cache, java, resources, webpack, karma]');
 		console.log();
 	});
 

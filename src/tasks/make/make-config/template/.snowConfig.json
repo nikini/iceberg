@@ -1,10 +1,19 @@
 {
 	"v2": {
 		"name": "<%= name %>",
-		"sassPath": "<%= sassPath %>",
-		"modulePath": "<%= modulePath %>",
+		"sassPath": "src/main/plugins/<%= plugin %>/ui.html/scss",
+		"modulePath": "src/main/plugins/<%= plugin %>/ui.html/scripts",
+		"copyPath": "src/main/plugins/<%= plugin %>",
+		"targetPath": "target/classes/GLIDE-INF/plugins/<%= plugin %>",
+		"watchPaths": [
+			"src/main/plugins/<%= plugin %>/**/*",
+			"src/main/java/**/*.java",
+			"!src/main/plugins/<%= plugin %>/update/**/*",
+			"!src/main/plugins/<%= plugin %>/upload/**/*",
+			"!src/main/plugins/<%= plugin %>/apply_once/**/*"
+		],
 		"entry": "<%= entry %>",
-		"outputPath": "<%= outputPath %>",
+		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/scripts",
 		"outputName": "[name].bundle.js",
 		"extraKarmaFiles": []
 	}
