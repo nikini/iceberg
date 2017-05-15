@@ -30,9 +30,10 @@ $ pasnow watch
 The options for the watch are:
 
 ```
- -h, --help                outputs the usage information
- -e, --exclude <packages>  what packages to exclude (separated by comma)
- -s, --single              if included, it will run once and exit
+ -h,  --help                outputs the usage information
+ -e,  --exclude <packages>  what packages to exclude (separated by comma)
+ -s,  --single              if included, it will run once and exit
+ --silent                   this flag will hide OS notifications
 ```
 
 #### Examples
@@ -40,7 +41,7 @@ The options for the watch are:
 ```
 $ pasnow watch --e karma,webpack
 $ pasnow watch --exclude resources,cache
-$ pasnow watch -s
+$ pasnow watch -s --silent
 ```
 
 ## Make

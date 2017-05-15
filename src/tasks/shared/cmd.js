@@ -42,8 +42,9 @@ module.exports = {
 	 * @param  {Function} callback
 	 * @param  {string}   [message='']
 	 * @param  {Object}   [data={}]
+	 * @param  {Function} [afterEnd=false]
 	 */
-	runCountLog(callback, message = '', data = {}) {
+	runCountLog(callback, message = '', data = {}, afterEnd = false) {
 		const timeStart = Date.now();
 		callback();
 		const timeEnd = Date.now();
@@ -56,5 +57,8 @@ module.exports = {
 		});
 
 		this.log(finalMessage);
+
+		if (typeof afterEnd === 'function')
+			afterEnd();
 	},
 };

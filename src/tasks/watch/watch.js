@@ -55,20 +55,20 @@ module.exports = (options = {}, onChange) => {
 
 		// Copy the file
 		if (options.exclude.indexOf('resources') < 0 && resourcesExtensions.indexOf(extension) >= 0)
-			copyFile(filepath, configuration.targetPath, configuration.copyPath);
+			copyFile(filepath, configuration.targetPath, configuration.copyPath, options.silent);
 
 		// Clear the cache if the changed file is an xml file
 		if (options.exclude.indexOf('cache') < 0 && extension === 'xml')
 			cacheClear(() => {
 				if (options.exclude.indexOf('livereload') < 0)
 					livereloadServer.refresh('*');
-			}, options.host, options.port);
+			}, options.host, options.port, options.silent);
 
 		// Compile if the changed file is a JAVA file
 		if (options.exclude.indexOf('java') < 0 && extension === 'java')
 			mavenCompile(() => {
 				if (options.exclude.indexOf('livereload') < 0)
 					livereloadServer.refresh('*');
-			});
+			}, options.silent);
 	});
 };

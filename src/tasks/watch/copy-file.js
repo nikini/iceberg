@@ -1,15 +1,17 @@
 const shell = require('shelljs');
 const cmd = require('../shared/cmd');
+const notify = require('../shared/notify');
 const path = require('path');
 
 /**
  * Clears the cache
  *
- * @param  {string} file
- * @param  {string} destination
- * @param  {string} src
+ * @param  {string}  file
+ * @param  {string}  destination
+ * @param  {string}  src
+ * @param  {Boolean} [silent=false]
  */
-module.exports = (file = '', destination = '', src = '') => {
+module.exports = (file = '', destination = '', src = '', silent = false) => {
 	cmd.runCountLog(() => {
 		// Get the filePath and get the destinationPath
 		const filePath = path.resolve(file);
@@ -26,5 +28,20 @@ module.exports = (file = '', destination = '', src = '') => {
 		shell.cp('-f', filePath, destinationPath);
 	}, 'Copied {file} in {duration}', {
 		file,
+	}, () => {
+		// After the logging is done
+		if (!silent) {
+			let filename = file;
+			const filePath = path.resolve(file);
+			if (src) {
+				const srcPath = path.resolve(src);
+				filename = filePath.replace(srcPath, '');
+
+				// If it starts with a / then remove the first one
+				if (filename[0] === '/')
+					filename = filename.substr(1);
+			}
+			notify(`Copied "${filename}"`);
+		}
 	});
 };

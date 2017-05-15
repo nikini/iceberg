@@ -15,10 +15,12 @@ program
 	.description('Watch files, copy resources, build SASS and JS (if needed)')
 	.option('-e, --exclude <package,package>', 'What to exclude (if not already excluded)')
 	.option('-s, --single', 'Run once and then exit (webpack and karma)')
+	.option('--silent', 'This flag will hide OS notifications')
 	.action((options) => {
 		watch({
 			exclude: (options.exclude || '').split(','),
 			single: Boolean(options.single),
+			silent: Boolean(options.silent),
 		});
 	})
 	.on('--help', () => {
@@ -27,7 +29,7 @@ program
 		console.log('    $ pasnow watch');
 		console.log('    $ pasnow watch -e karma,webpack');
 		console.log('    $ pasnow watch --exclude resources,cache,java');
-		console.log('    $ pasnow watch -s');
+		console.log('    $ pasnow watch -s --silent');
 		console.log();
 		console.log('  For exclude you can use: [cache, java, resources, webpack, karma, livereload]');
 		console.log();
