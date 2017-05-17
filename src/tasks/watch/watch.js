@@ -1,6 +1,7 @@
 const Gaze = require('gaze').Gaze;
 const cmd = require('../shared/cmd');
 const livereload = require('livereload');
+const tasksLister = require('./tasks-lister');
 
 // Tasks
 const mavenCompile = require('./maven-compile');
@@ -43,7 +44,7 @@ module.exports = (options = {}, onChange) => {
 
 	// Start the webpack watch
 	if (options.exclude.indexOf('webpack') < 0)
-		webpackWatch(options.single);
+		webpackWatch(options);
 
 	// Start the karma server
 	if (options.exclude.indexOf('karma') < 0)
@@ -65,7 +66,7 @@ module.exports = (options = {}, onChange) => {
 			}, options.host, options.port, options.silent);
 
 		// Compile if the changed file is a JAVA file
-		if (options.exclude.indexOf('java') < 0 && extension === 'java')
+		if (options.exclude.indexOf('maven-compile') < 0 && extension === 'java')
 			mavenCompile(() => {
 				if (options.exclude.indexOf('livereload') < 0)
 					livereloadServer.refresh('*');

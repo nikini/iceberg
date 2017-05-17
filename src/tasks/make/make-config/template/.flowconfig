@@ -1,0 +1,9 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/*
+
+[include]
+src/main/plugins/<%= plugin %>/ui.html/sources/js
+
+[libs]
+
+[options]

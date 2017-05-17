@@ -8,6 +8,7 @@ const SassLintPlugin = require('sasslint-webpack-plugin');
 
 const cmd = require('../tasks/shared/cmd');
 const getConfig = require('../tasks/shared/get-config');
+const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 
 /**
  * Function that spits out the webpack config
@@ -23,6 +24,7 @@ module.exports = (options = {}) => {
 	const jsPath = path.resolve(configuration.modulePath);
 	const entry = path.join(path.resolve(jsPath), configuration.entry);
 	const outputPath = path.resolve(configuration.outputPath);
+	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 
 	const plugins = [
 		new SassLintPlugin({
@@ -62,7 +64,7 @@ module.exports = (options = {}) => {
 		resolve: {
 			modules: [
 				jsPath,
-				'./node_modules',
+				nodeModulesPath,
 			],
 			extensions: ['.js'],
 		},
@@ -74,6 +76,7 @@ module.exports = (options = {}) => {
 					test: /\.js$/,
 					exclude: excludePath,
 					loader: 'eslint-loader',
+					options: eslintJson,
 				},
 				{
 					test: /\.js$/,

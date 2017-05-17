@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 const program = require('commander');
 const watch = require('./src/tasks/watch/watch');
+const run = require('./src/tasks/run/run');
 const make = require('./src/tasks/make/make');
 const build = require('./src/tasks/build/build');
 const init = require('./src/tasks/init/init');
 const remove = require('./src/tasks/remove/remove');
 const currentPackage = require('./package.json');
+const tasksLister = require('./src/tasks/watch/tasks-lister');
+
+// Form the string to be used later
+const watchTasks = '[' + tasksLister('', 'watch').join(', ') + ']';
+const runTasks = '[' + tasksLister('', 'run').join(', ') + ']';
 
 program
 	.version(currentPackage.version);
@@ -13,7 +19,7 @@ program
 program
 	.command('watch')
 	.description('Watch files, copy resources, build SASS and JS (if needed)')
-	.option('-e, --exclude <package,package>', 'What to exclude (if not already excluded)')
+	.option('-e, --exclude <packages>', 'What to exclude (if not already excluded)')
 	.option('-s, --single', 'Run once and then exit (webpack and karma)')
 	.option('--silent', 'This flag will hide OS notifications')
 	.action((options) => {
@@ -31,7 +37,27 @@ program
 		console.log('    $ pasnow watch --exclude resources,cache,java');
 		console.log('    $ pasnow watch -s --silent');
 		console.log();
-		console.log('  For exclude you can use: [cache, java, resources, webpack, karma, livereload]');
+		console.log('  For exclude you can use: ' + watchTasks);
+		console.log();
+	});
+
+program
+	.command('run <package>')
+	.description('Run a package, such as: ' + runTasks)
+	.option('--silent', 'This flag will hide OS notifications')
+	.action((packageName, options) => {
+		run({
+			package: packageName,
+			silent: Boolean(options.silent),
+		});
+	})
+	.on('--help', () => {
+		console.log('  Examples:');
+		console.log();
+		console.log('    $ pasnow run karma --silent');
+		console.log('    $ pasnow run webpack');
+		console.log();
+		console.log('  For package you can use: ' + runTasks);
 		console.log();
 	});
 

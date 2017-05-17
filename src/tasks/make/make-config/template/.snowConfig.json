@@ -1,8 +1,8 @@
 {
 	"v2": {
 		"name": "<%= name %>",
-		"sassPath": "src/main/plugins/<%= plugin %>/ui.html/scss",
-		"modulePath": "src/main/plugins/<%= plugin %>/ui.html/scripts",
+		"sassPath": "src/main/plugins/<%= plugin %>/ui.html/sources/scss",
+		"modulePath": "src/main/plugins/<%= plugin %>/ui.html/sources/js",
 		"copyPath": "src/main/plugins/<%= plugin %>",
 		"targetPath": "target/classes/GLIDE-INF/plugins/<%= plugin %>",
 		"watchPaths": [

@@ -13,7 +13,6 @@ const getQuestions = require('./helpers/get-questions');
 module.exports = (name = '') => {
 	const destination = process.cwd();
 	const templateDir = path.join(__dirname, 'template');
-	const filename = '.snowConfig.json';
 	const options = {
 		name,
 	};
@@ -41,18 +40,20 @@ module.exports = (name = '') => {
 		if (options.name)
 			answers.name = options.name;
 
-		// Count the operation
-		cmd.runCountLog(() => {
-			const templateConfigFile = path.join(templateDir, filename);
-			const filePath = path.join(destination, filename);
-			shell.cp(templateConfigFile, filePath);
+		shell.ls('-A', templateDir).forEach((filename) => {
+			// Count the operation
+			cmd.runCountLog(() => {
+				const templateConfigFile = path.join(templateDir, filename);
+				const filePath = path.join(destination, filename);
+				shell.cp(templateConfigFile, filePath);
 
-			// Compile te file and write to the new file
-			const compiledTemplate = template(shell.cat(filePath));
-			const fileContents = shell.ShellString(compiledTemplate(answers));
-			fileContents.to(filePath);
-		}, 'Created the file {file} in {duration}', {
-			file: filename,
+				// Compile te file and write to the new file
+				const compiledTemplate = template(shell.cat(filePath));
+				const fileContents = shell.ShellString(compiledTemplate(answers));
+				fileContents.to(filePath);
+			}, 'Created the file {file} in {duration}', {
+				file: filename,
+			});
 		});
 	});
 };

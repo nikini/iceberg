@@ -1,68 +1,67 @@
 {
-  "extends": "airbnb",
-  "rules": {
-	"max-len": "off",
-	"no-tabs": "off",
-	"vars-on-top": "off",
-	"curly": [
-	  "error",
-	  "multi"
-	],
-	"comma-dangle": ["error", {
-		"arrays": "always-multiline",
-		"objects": "always-multiline",
-		"imports": "always-multiline",
-		"exports": "always-multiline",
-		"functions": "ignore"
-	}],
-    "no-unused-vars": "off",
-	"prefer-arrow-callback": "off",
-	"prefer-rest-params": "off",
-	"prefer-template": "off",
-	"no-console": "off",
-	"prefer-spread": "off",
-	"no-new": "off",
-	"arrow-body-style": "off",
-	"default-case": "off",
-	"no-alert": "off",
-	"no-param-reassign": ["warn", { "props": false }],
-	"no-underscore-dangle": "off",
-	"object-shorthand": "off",
-	"func-names": [
-	  "warn",
-	  "always"
-	],
-	"quotes": [
-	  "warn",
-	  "single"
-	],
-	"indent": [
-	  "error",
-	  "tab"
-	],
-	"no-restricted-syntax": [
-	  "error",
-	  "WithStatement"
-	],
-	"no-prototype-builtins": "off",
-	"block-scoped-var": "off",
-	"no-plusplus": "off",
-	"strict": "off",
-	"no-constant-condition": "error",
-	"import/no-extraneous-dependencies": "off",
-    "import/no-unresolved": "off",
-    "import/newline-after-import": "off",
-    "import/first": "off",
-    "import/extensions": "off",
-	"no-unresolved": "off"
-  },
-  "env": {
-	"browser": true,
-	"node": true
-  },
-  "globals": {
-	"$j": true,
-	"angular": true,
-	"gel": true
-  }
+	"extends": "airbnb",
+	"rules": {
+		"max-len": "off",
+		"no-tabs": "off",
+		"vars-on-top": "off",
+		"curly": [
+		  "error",
+		  "multi"
+		],
+		"comma-dangle": ["error", {
+			"arrays": "always-multiline",
+			"objects": "always-multiline",
+			"imports": "always-multiline",
+			"exports": "always-multiline",
+			"functions": "ignore"
+		}],
+	    "no-unused-vars": "off",
+		"prefer-arrow-callback": "off",
+		"prefer-rest-params": "off",
+		"prefer-template": "off",
+		"no-console": "off",
+		"prefer-spread": "off",
+		"no-new": "off",
+		"arrow-body-style": "off",
+		"default-case": "off",
+		"no-alert": "off",
+		"no-param-reassign": ["warn", { "props": false }],
+		"no-underscore-dangle": "off",
+		"object-shorthand": "off",
+		"func-names": [
+		  "warn",
+		  "always"
+		],
+		"quotes": [
+		  "warn",
+		  "single"
+		],
+		"indent": [
+		  "error",
+		  "tab"
+		],
+		"no-restricted-syntax": [
+		  "error",
+		  "WithStatement"
+		],
+		"no-prototype-builtins": "off",
+		"block-scoped-var": "off",
+		"no-plusplus": "off",
+		"strict": "off",
+		"no-constant-condition": "error",
+		"import/no-extraneous-dependencies": "off",
+		"import/no-unresolved": "off",
+		"import/newline-after-import": "off",
+		"import/first": "off",
+		"import/imports-first": "off",
+		"import/extensions": "off",
+		"no-unresolved": "off"
+	},
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"globals": [
+		"$j", "angular", "gel"
+	]
 }
