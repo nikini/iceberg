@@ -1,7 +1,6 @@
 const path = require('path');
 const cmd = require('../shared/cmd');
 const KarmaServer = require('karma').Server;
-const karmaRunner = require('karma').runner;
 const karmaConfig = require('../../configs/karma-config.js');
 
 /**
@@ -10,6 +9,8 @@ const karmaConfig = require('../../configs/karma-config.js');
  * @param  {Boolean} [single=false]
  */
 module.exports = (single = false) => {
+	cmd.log('Starting Karma');
+
 	const config = karmaConfig(single);
 	const server = new KarmaServer(config, (exitCode) => {
 		if (exitCode > 0)

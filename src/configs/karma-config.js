@@ -77,6 +77,12 @@ module.exports = (single = false) => {
 			},
 		},
 
+		webpackMiddleware: {
+			noInfo: true,
+			stats: 'errors-only',
+		},
+
+
 		webpack: webpackConfig(),
 	};
 };

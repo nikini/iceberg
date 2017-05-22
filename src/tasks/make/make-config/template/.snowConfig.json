@@ -13,8 +13,8 @@
 			"!src/main/plugins/<%= plugin %>/apply_once/**/*"
 		],
 		"entry": "<%= entry %>",
-		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/scripts",
-		"outputName": "[name].bundle.js",
+		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
+		"outputName": "[name].bundle",
 		"extraKarmaFiles": []
 	}
 }

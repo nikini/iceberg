@@ -1,6 +1,6 @@
 {
   "name": "pasnow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ServiceNow PA Team Tools for the command line",
   "main": "index.js",
   "scripts": {},
@@ -55,6 +55,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "flow-bin": "^0.46.0"
   },
   "repository": {

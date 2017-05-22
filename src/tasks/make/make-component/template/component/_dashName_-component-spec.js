@@ -1,4 +1,4 @@
-/* global describe, it, expect, beforeEach, afterEach */
+/* global angular, describe, it, expect, beforeEach, afterEach */
 
 import './<%= dashName %>-component';
 

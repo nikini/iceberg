@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
 const SassLintPlugin = require('sasslint-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const cmd = require('../tasks/shared/cmd');
 const getConfig = require('../tasks/shared/get-config');
@@ -23,14 +24,26 @@ module.exports = (options = {}) => {
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
 	const entry = path.join(path.resolve(jsPath), configuration.entry);
-	const outputPath = path.resolve(configuration.outputPath);
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
+
+	const outputPath = path.resolve(configuration.outputPath);
+	const outputName = configuration.outputName || '[name].bundle';
+
+	// Output extracted CSS to a file
+	const extractPlugin = new ExtractTextPlugin({
+		filename: `${outputName}.css`,
+	});
+	const extractPluginConfig = extractPlugin.extract({
+		use: 'css-loader',
+		fallback: 'style-loader',
+	});
 
 	const plugins = [
 		new SassLintPlugin({
 			configFile: '.sass-lint.yml',
 			glob: `${scssPath}/**/*.s?(a|c)ss`,
 		}),
+		extractPlugin,
 	];
 
 	if (options.production)
@@ -53,13 +66,13 @@ module.exports = (options = {}) => {
 
 	return {
 		name: configuration.name || 'PA',
-		devtool: options.production ? undefined : '#cheap-source-map',
+		devtool: options.production ? undefined : '#cheap-module-source-map',
 		entry: [
 			entry,
 		],
 		output: {
 			path: outputPath,
-			filename: configuration.outputName || '[name].bundle.js',
+			filename: `${outputName}.js`,
 		},
 		resolve: {
 			modules: [
@@ -70,67 +83,61 @@ module.exports = (options = {}) => {
 		},
 
 		module: {
-			rules: [
-				{
-					enforce: 'pre',
-					test: /\.js$/,
-					exclude: excludePath,
-					loader: 'eslint-loader',
-					options: eslintJson,
+			rules: [{
+				enforce: 'pre',
+				test: /\.js$/,
+				exclude: excludePath,
+				loader: 'eslint-loader',
+				options: eslintJson,
+			}, {
+				test: /\.js$/,
+				exclude: excludePath,
+				use: {
+					loader: 'babel-loader',
 				},
-				{
-					test: /\.js$/,
-					exclude: excludePath,
-					use: {
-						loader: 'babel-loader',
+			}, {
+				enforce: 'pre',
+				test: /\.html$/,
+				exclude: excludePath,
+				loader: 'htmlhint-loader',
+			}, {
+				test: /\.html$/,
+				loader: `ngtemplate-loader?relativeTo=${jsPath}/!html-loader`,
+			}, {
+				test: /\.scss$/,
+				exclude: excludePath,
+				use: [extractPluginConfig[0], {
+					// creates style nodes from JS strings
+					loader: 'style-loader',
+				}, {
+					// translates CSS into CommonJS
+					loader: 'css-loader',
+					options: {
+						sourceMap: true,
 					},
-				},
-				{
-					enforce: 'pre',
-					test: /\.html$/,
-					exclude: excludePath,
-					loader: 'htmlhint-loader',
-				},
-				{
-					test: /\.html$/,
-					loader: `ngtemplate-loader?relativeTo=${jsPath}/!html-loader`,
-				},
-				{
-					test: /\.scss$/,
-					exclude: excludePath,
-					use: [{
-						// creates style nodes from JS strings
-						loader: 'style-loader',
-					}, {
-						// translates CSS into CommonJS
-						loader: 'css-loader',
-						options: {
-							sourceMap: true,
+				}, {
+					// Post CSS (for autoprefixer)
+					loader: 'postcss-loader',
+					options: {
+						plugins() {
+							return [
+								precss,
+								autoprefixer({
+									browsers: ['last 2 versions', '> 5%', 'ie 9', 'ie 10', 'ie 11'],
+								}),
+							];
 						},
-					}, {
-						// Post CSS (for autoprefixer)
-						loader: 'postcss-loader',
-						options: {
-							plugins() {
-								return [
-									precss,
-									autoprefixer({
-										browsers: ['last 2 versions', '> 5%', 'ie 9', 'ie 10', 'ie 11'],
-									}),
-								];
-							},
-						},
-					}, {
-						// compiles Sass to CSS
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true,
-							importer: [jsonImporter],
-							includePaths: [scssPath, jsPath],
-						},
-					}],
-				},
-			],
+					},
+				}, {
+					// compiles Sass to CSS
+					loader: 'sass-loader',
+					options: {
+						sourceMap: true,
+						importer: [jsonImporter],
+						includePaths: [scssPath, jsPath],
+					},
+				}],
+			}],
 		},
 
 		plugins,
