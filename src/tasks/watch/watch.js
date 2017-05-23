@@ -27,7 +27,7 @@ module.exports = (options = {}, onChange) => {
 
 	const gaze = new Gaze(configuration.watchPaths);
 	gaze.on('ready', (watcher) => {
-		cmd.log('Watch started');
+		cmd.log('Started watching files for changes');
 	});
 
 	// File extension for the files that will get copied
@@ -39,7 +39,7 @@ module.exports = (options = {}, onChange) => {
 	// Start the livereload
 	if (options.exclude.indexOf('livereload') < 0) {
 		livereloadServer = livereload.createServer();
-		livereloadServer.watch(process.cwd());
+		cmd.log('LiveReload started');
 	}
 
 	// Start the webpack watch
@@ -55,8 +55,11 @@ module.exports = (options = {}, onChange) => {
 		const extension = filepath.split('.').pop();
 
 		// Copy the file
-		if (options.exclude.indexOf('resources') < 0 && resourcesExtensions.indexOf(extension) >= 0)
+		if (options.exclude.indexOf('resources') < 0 && resourcesExtensions.indexOf(extension) >= 0) {
 			copyFile(filepath, configuration.targetPath, configuration.copyPath, options.silent);
+			if (options.exclude.indexOf('livereload') < 0)
+				livereloadServer.refresh('*');
+		}
 
 		// Clear the cache if the changed file is an xml file
 		if (options.exclude.indexOf('cache') < 0 && extension === 'xml')
