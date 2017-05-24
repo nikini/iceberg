@@ -57,7 +57,9 @@ module.exports = (options = {}, onChange) => {
 		// Copy the file
 		if (options.exclude.indexOf('resources') < 0 && resourcesExtensions.indexOf(extension) >= 0) {
 			copyFile(filepath, configuration.targetPath, configuration.copyPath, options.silent);
-			if (options.exclude.indexOf('livereload') < 0)
+			if (options.exclude.indexOf('livereload') < 0 && extension !== 'java' && extension !== 'xml')
+				// We are excluding java and xml files because they reset
+				// the livereload when the cache/maven is done
 				livereloadServer.refresh('*');
 		}
 

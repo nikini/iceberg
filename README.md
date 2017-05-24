@@ -21,7 +21,7 @@ $ pasnow init
 
 ## Watch
 
-The watch starts the webpack watch, karma watch and the resources copy. You can choose to exclude: `cache`, `java`, `resources`, `webpack`, `karma`, `livereload`.
+The watch starts the webpack watch, karma watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `karma`, `livereload`.
 
 ```
 $ pasnow watch
@@ -32,16 +32,43 @@ The options for the watch are:
 ```
  -h,  --help                outputs the usage information
  -e,  --exclude <packages>  what packages to exclude (separated by comma)
- -s,  --single              if included, it will run once and exit
+ -s,  --single              run once and then exit (webpack and karma)
  --silent                   this flag will hide OS notifications
+ --host                     hostname for the cache clear
+ --port                     port for the cache clear
 ```
 
 #### Examples
 
 ```
 $ pasnow watch --e karma,webpack
-$ pasnow watch --exclude resources,cache
+$ pasnow watch --exclude resources,cache,maven-compile
 $ pasnow watch -s --silent
+```
+
+## Run
+
+The run command starts a task, like: `cache`, `maven-compile`, `webpack`, `karma`, `flow-check`.
+
+```
+$ pasnow run <package>
+```
+
+The options for the run are:
+
+```
+ -h,  --help                outputs the usage information
+ --silent                   this flag will hide OS notifications
+ --host                     hostname for the cache clear
+ --port                     port for the cache clear
+```
+
+#### Examples
+
+```
+$ pasnow run karma --silent
+$ pasnow run webpack
+$ pasnow run cache --host localhost --port 8081
 ```
 
 ## Make

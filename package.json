@@ -1,6 +1,6 @@
 {
   "name": "pasnow",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "ServiceNow PA Team Tools for the command line",
   "main": "index.js",
   "scripts": {},

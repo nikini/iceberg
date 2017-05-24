@@ -15,14 +15,24 @@ module.exports = (callback = false, host = 'localhost', port = '8080', silent = 
 	const url = colors.gray(`http://${host}:${port}/cache.do`);
 	cmd.log(`Starting cache clear (${url})`);
 
+	const timeStart = Date.now();
 	request(`http://${host}:${port}/cache.do`, (error, response, body) => {
-		if (error)
+		if (error) {
 			cmd.error(error);
-		else {
-			cmd.log('Cache cleared succesfully');
 
 			if (!silent)
-				notify('Cache cleared succesfully');
+				notify('Could not clear cache! Check terminal for info.');
+		} else {
+			// Get the duration
+			const timeEnd = Date.now();
+			const duration = ((timeEnd - timeStart) / 1000).toFixed(3) + 's';
+			const coloredDuration = colors.gray(duration);
+
+			// Log [and notify]
+			cmd.log(`Cache cleared succesfully in ${coloredDuration}`);
+
+			if (!silent)
+				notify(`Cache cleared succesfully in ${duration}`);
 
 			if (typeof callback === 'function')
 				callback();

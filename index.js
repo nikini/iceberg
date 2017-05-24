@@ -22,11 +22,15 @@ program
 	.option('-e, --exclude <packages>', 'What to exclude (if not already excluded)')
 	.option('-s, --single', 'Run once and then exit (webpack and karma)')
 	.option('--silent', 'This flag will hide OS notifications')
+	.option('--host <hostname>', 'Hostname for the cache clear')
+	.option('--port <port>', 'Port for the cache clear')
 	.action((options) => {
 		watch({
 			exclude: (options.exclude || '').split(','),
 			single: Boolean(options.single),
 			silent: Boolean(options.silent),
+			host: options.host,
+			port: options.port,
 		});
 	})
 	.on('--help', () => {
@@ -34,7 +38,7 @@ program
 		console.log();
 		console.log('    $ pasnow watch');
 		console.log('    $ pasnow watch -e karma,webpack');
-		console.log('    $ pasnow watch --exclude resources,cache,java');
+		console.log('    $ pasnow watch --exclude resources,cache,maven-compile');
 		console.log('    $ pasnow watch -s --silent');
 		console.log();
 		console.log('  For exclude you can use: ' + watchTasks);
@@ -45,10 +49,15 @@ program
 	.command('run <package>')
 	.description('Run a package, such as: ' + runTasks)
 	.option('--silent', 'This flag will hide OS notifications')
+	.option('--host <hostname>', 'Hostname for the cache clear')
+	.option('--port <port>', 'Port for the cache clear')
 	.action((packageName, options) => {
+		console.log('package', packageName);
 		run({
 			package: packageName,
 			silent: Boolean(options.silent),
+			host: options.host,
+			port: options.port,
 		});
 	})
 	.on('--help', () => {
@@ -56,6 +65,7 @@ program
 		console.log();
 		console.log('    $ pasnow run karma --silent');
 		console.log('    $ pasnow run webpack');
+		console.log('    $ pasnow run cache --host localhost --port 8080');
 		console.log();
 		console.log('  For package you can use: ' + runTasks);
 		console.log();
