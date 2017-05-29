@@ -1,4 +1,4 @@
-import app from 'modules/module.pa';
+import app from 'module-pa/module-pa';
 
 // Component files
 import Controller from './<%= dashName %>-component-controller';
