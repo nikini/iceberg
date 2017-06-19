@@ -1,7 +1,7 @@
 # Iceberg Tool
 
-[![NPM Version](http://img.shields.io/npm/v/pasnow.svg?style=flat)](https://www.npmjs.org/package/pasnow)
-[![NPM Downloads](https://img.shields.io/npm/dm/pasnow.svg?style=flat)](https://www.npmjs.org/package/pasnow)
+[![NPM Version](http://img.shields.io/npm/v/iceberg.svg?style=flat)](https://www.npmjs.org/package/iceberg)
+[![NPM Downloads](https://img.shields.io/npm/dm/iceberg.svg?style=flat)](https://www.npmjs.org/package/iceberg)
 
 This tool has [webpack](https://github.com/webpack/webpack), [karma](https://github.com/karma-runner/karma) and other technologies built in to help you bundle and test your angular module
 
@@ -10,13 +10,13 @@ This tool has [webpack](https://github.com/webpack/webpack), [karma](https://git
 You should install it globally first:
 
 ```
-$ npm install pasnow -g
+$ npm install iceberg -g
 ```
 
 and then run, in your project folder:
 
 ```
-$ pasnow init
+$ iceberg init
 ```
 
 ## Watch
@@ -24,7 +24,7 @@ $ pasnow init
 The watch starts the webpack watch, karma watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `karma`, `livereload`.
 
 ```
-$ pasnow watch
+$ iceberg watch
 ```
 
 The options for the watch are:
@@ -41,9 +41,9 @@ The options for the watch are:
 #### Examples
 
 ```
-$ pasnow watch --e karma,webpack
-$ pasnow watch --exclude resources,cache,maven-compile
-$ pasnow watch -s --silent
+$ iceberg watch --e karma,webpack
+$ iceberg watch --exclude resources,cache,maven-compile
+$ iceberg watch -s --silent
 ```
 
 ## Run
@@ -51,7 +51,7 @@ $ pasnow watch -s --silent
 The run command starts a task, like: `cache`, `maven-compile`, `webpack`, `karma`, `flow-check`.
 
 ```
-$ pasnow run <package>
+$ iceberg run <package>
 ```
 
 The options for the run are:
@@ -66,9 +66,9 @@ The options for the run are:
 #### Examples
 
 ```
-$ pasnow run karma --silent
-$ pasnow run webpack
-$ pasnow run cache --host localhost --port 8081
+$ iceberg run karma --silent
+$ iceberg run webpack
+$ iceberg run cache --host localhost --port 8081
 ```
 
 ## Make
@@ -76,7 +76,7 @@ $ pasnow run cache --host localhost --port 8081
 A tool to scaffold components, configs or linting configs.
 
 ```
-$ pasnow make [name] [options]
+$ iceberg make [name] [options]
 ```
 
 The options for the make are:
@@ -91,9 +91,9 @@ For type you can use: `component`, `config`, `lint-files`.
 #### Examples
 
 ```
-$ pasnow make visualization -t component
-$ pasnow make --type lint-files
-$ pasnow make -t config
+$ iceberg make visualization -t component
+$ iceberg make --type lint-files
+$ iceberg make -t config
 ```
 
 ## Build
@@ -101,15 +101,15 @@ $ pasnow make -t config
 It builds the JS bundle ready for production
 
 ```
-$ pasnow build
+$ iceberg build
 ```
 
 ## Remove
 
-Remove pasnow from the project.
+Remove iceberg from the project.
 
 ```
-$ pasnow remove
+$ iceberg remove
 ```
 
 ## License
