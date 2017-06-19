@@ -10,7 +10,7 @@ This tool has [webpack](https://github.com/webpack/webpack), [karma](https://git
 You should install it globally first:
 
 ```
-$ npm install iceberg -g
+$ npm install iceberg-packer -g
 ```
 
 and then run, in your project folder:
