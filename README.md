@@ -1,7 +1,7 @@
 # Iceberg Tool
 
-[![NPM Version](http://img.shields.io/npm/v/iceberg.svg?style=flat)](https://www.npmjs.org/package/iceberg)
-[![NPM Downloads](https://img.shields.io/npm/dm/iceberg.svg?style=flat)](https://www.npmjs.org/package/iceberg)
+[![NPM Version](http://img.shields.io/npm/v/iceberg-packer.svg?style=flat)](https://www.npmjs.org/package/iceberg-packer)
+[![NPM Downloads](https://img.shields.io/npm/dm/iceberg-packer.svg?style=flat)](https://www.npmjs.org/package/iceberg-packer)
 
 This tool has [webpack](https://github.com/webpack/webpack), [karma](https://github.com/karma-runner/karma) and other technologies built in to help you bundle and test your angular module
 
