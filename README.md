@@ -1,4 +1,4 @@
-# PA ServiceNow Tool
+# Iceberg Tool
 
 [![NPM Version](http://img.shields.io/npm/v/pasnow.svg?style=flat)](https://www.npmjs.org/package/pasnow)
 [![NPM Downloads](https://img.shields.io/npm/dm/pasnow.svg?style=flat)](https://www.npmjs.org/package/pasnow)

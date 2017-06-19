@@ -1,13 +1,13 @@
 {
-  "name": "pasnow",
-  "version": "0.1.5",
-  "description": "ServiceNow PA Team Tools for the command line",
+  "name": "iceberg",
+  "version": "0.1.0",
+  "description": "Iceberg Tools for the command line",
   "main": "index.js",
   "scripts": {},
   "author": "Ciprian Mocanu <ciprian.mocanu@servicenow.com>",
   "license": "MIT",
   "bin": {
-    "pasnow": "./index.js"
+    "iceberg": "./index.js"
   },
   "dependencies": {
     "autoprefixer": "^6.7.7",
@@ -60,6 +60,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nikini/pasnow.git"
+    "url": "https://github.com/nikini/iceberg.git"
   }
 }
