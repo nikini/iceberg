@@ -7,7 +7,7 @@ const packageConfig = require('../shared/package-config');
 const currentPackage = require('../../../package.json');
 
 /**
- * Installs pa snow to the current project
+ * Removes iceberg from the current project
  */
 module.exports = () => {
 	const cwdPackageConfig = packageConfig.get();
