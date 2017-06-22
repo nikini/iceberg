@@ -26,6 +26,7 @@ module.exports = (options = {}) => {
 	const jsPath = path.resolve(configuration.modulePath);
 	const entry = path.join(path.resolve(jsPath), configuration.entry);
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
+	const packageNodeModulesPath = path.join(__dirname, 'node_modules');
 
 	const outputPath = path.resolve(configuration.outputPath);
 	const outputName = configuration.outputName || '[name].bundle';
@@ -79,6 +80,7 @@ module.exports = (options = {}) => {
 			modules: [
 				jsPath,
 				nodeModulesPath,
+				packageNodeModulesPath,
 			],
 			extensions: ['.js', '.jsx'],
 		},
