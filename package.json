@@ -4,7 +4,7 @@
   "description": "Iceberg Tools for the command line",
   "main": "index.js",
   "scripts": {},
-  "author": "Ciprian Mocanu <ciprian.mocanu@servicenow.com>",
+  "author": "Ciprian Mocanu <ciprian@mbe.ro>",
   "license": "MIT",
   "bin": {
     "iceberg": "./index.js"
