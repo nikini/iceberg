@@ -1,5 +1,6 @@
 const cmd = require('../shared/cmd');
 const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('../../configs/webpack-config');
 
 /**
@@ -8,7 +9,8 @@ const webpackConfig = require('../../configs/webpack-config');
  * @param  {Object} [options={}]
  */
 module.exports = (options = {}) => {
-	const compiler = webpack(webpackConfig(options));
+	const config = webpackConfig(options);
+	const compiler = webpack(config);
 
 	if (options.single)
 		compiler.run((err, stats) => {
@@ -19,13 +21,10 @@ module.exports = (options = {}) => {
 				colors: true,
 			}));
 		});
-	else
-		compiler.watch({}, (err, stats) => {
-			if (err)
-				cmd.error(err);
-			cmd.log(stats.toString({
-				chunks: false,
-				colors: true,
-			}));
+	else {
+		const server = new WebpackDevServer(compiler, config.devServer);
+		server.listen(config.devServer.port, 'localhost', () => {
+			cmd.log(`Starting dev server on http://localhost:${config.devServer.port}`);
 		});
+	}
 };

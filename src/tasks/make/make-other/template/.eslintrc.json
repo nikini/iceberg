@@ -60,7 +60,25 @@
 		"import/first": "off",
 		"import/imports-first": "off",
 		"import/extensions": "off",
-		"no-unresolved": "off"
+		"no-unresolved": "off",
+    	"react/jsx-indent": [ "warn", "tab" ],
+		"react/prefer-stateless-function": "off",
+
+		"react/forbid-prop-types": "off",
+		"react/require-default-props": "off",
+		"react/prop-types": "off",
+		"react/jsx-first-prop-new-line": "off",
+		"react/jsx-max-props-per-line": "off",
+		"react/jsx-indent-props": "off",
+		"react/jsx-closing-bracket-location": "off",
+		"react/jsx-no-bind": "off",
+		"react/self-closing-comp": "off",
+		"react/sort-comp": "off",
+		"react/no-array-index-key": "off",
+		"react/no-string-refs": "off",
+		"no-undef": "off",
+		"quote-props": "off",
+		"comma-dangle": "off"
 	},
 	"env": {
 		"browser": true,

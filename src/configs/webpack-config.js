@@ -24,12 +24,14 @@ module.exports = (options = {}) => {
 	const configuration = getConfig();
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
-	const entry = path.join(path.resolve(jsPath), configuration.entry);
+	const entry = [path.join(path.resolve(jsPath), configuration.entry)];
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
-	const packageNodeModulesPath = path.join(__dirname, 'node_modules');
+	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
 	const outputPath = path.resolve(configuration.outputPath);
 	const outputName = configuration.outputName || '[name].bundle';
+
+	const devServerPort = 9090;
 
 	// Output extracted CSS to a file
 	const extractPlugin = new ExtractTextPlugin({
@@ -66,12 +68,19 @@ module.exports = (options = {}) => {
 			})
 		);
 
+	if (!options.single) {
+		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
+		entry.unshift('webpack/hot/dev-server');
+		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
+		plugins.push(hmrPlugin);
+		const namedModulesPlugin = new webpack.NamedModulesPlugin();
+		plugins.push(namedModulesPlugin);
+	}
+
 	return {
 		name: configuration.name || 'PA',
-		devtool: options.production ? undefined : '#cheap-module-source-map',
-		entry: [
-			entry,
-		],
+		devtool: options.production ? undefined : 'source-map',
+		entry,
 		output: {
 			path: outputPath,
 			filename: `${outputName}.js`,
@@ -79,8 +88,8 @@ module.exports = (options = {}) => {
 		resolve: {
 			modules: [
 				jsPath,
-				nodeModulesPath,
 				packageNodeModulesPath,
+				nodeModulesPath,
 			],
 			extensions: ['.js', '.jsx'],
 		},
@@ -97,7 +106,7 @@ module.exports = (options = {}) => {
 				exclude: excludePath,
 				use: {
 					loader: 'babel-loader',
-					options: babelConfig,
+					options: babelConfig(options),
 				},
 			}, {
 				test: /\.scss$/,
@@ -137,5 +146,12 @@ module.exports = (options = {}) => {
 		},
 
 		plugins,
+
+		devServer: {
+			hot: true,
+			inline: true,
+			compress: true,
+			port: devServerPort,
+		},
 	};
 };
