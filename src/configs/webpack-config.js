@@ -31,7 +31,7 @@ module.exports = (options = {}) => {
 	const outputPath = path.resolve(configuration.outputPath);
 	const outputName = configuration.outputName || '[name].bundle';
 
-	const devServerPort = 9090;
+	const devServerPort = options.devPort || 9090;
 
 	// Output extracted CSS to a file
 	const extractPlugin = new ExtractTextPlugin({

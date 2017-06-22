@@ -23,7 +23,9 @@ module.exports = (options = {}) => {
 		break;
 
 	case 'karma':
-		karmaStart(true);
+		karmaStart({
+			single: true,
+		});
 		break;
 
 	case 'cache':

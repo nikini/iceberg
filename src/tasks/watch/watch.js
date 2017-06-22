@@ -48,7 +48,7 @@ module.exports = (options = {}, onChange) => {
 
 	// Start the karma server
 	if (options.exclude.indexOf('karma') < 0)
-		karmaStart(options.single);
+		karmaStart(options);
 
 	// On changed / added / deleted
 	gaze.on('all', (eventType, filepath) => {

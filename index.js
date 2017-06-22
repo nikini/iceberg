@@ -24,6 +24,7 @@ program
 	.option('--silent', 'This flag will hide OS notifications')
 	.option('--host <hostname>', 'Hostname for the cache clear')
 	.option('--port <port>', 'Port for the cache clear')
+	.option('--dev-port <dev-port>', 'Port for the webpack-dev-server')
 	.action((options) => {
 		watch({
 			exclude: (options.exclude || '').split(','),
@@ -31,6 +32,7 @@ program
 			silent: Boolean(options.silent),
 			host: options.host,
 			port: options.port,
+			devPort: options.devPort,
 		});
 	})
 	.on('--help', () => {
@@ -40,6 +42,7 @@ program
 		console.log('    $ pasnow watch -e karma,webpack');
 		console.log('    $ pasnow watch --exclude resources,cache,maven-compile');
 		console.log('    $ pasnow watch -s --silent');
+		console.log('    $ pasnow watch -e karma --dev-port 9091');
 		console.log();
 		console.log('  For exclude you can use: ' + watchTasks);
 		console.log();

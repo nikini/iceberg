@@ -6,11 +6,11 @@ const config = require('karma').config;
 /**
  * Function that spits out the karma config
  *
- * @param  {Boolean} [single=false]
+ * @param  {Object} [options={}]
  *
  * @return {Object}
  */
-module.exports = (single = false) => {
+module.exports = (options = {}) => {
 	const configuration = getConfig();
 	const modulePath = path.resolve(configuration.modulePath);
 	const filesPath = path.join(modulePath, '**/*-spec.js');
@@ -64,7 +64,7 @@ module.exports = (single = false) => {
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
-		singleRun: single,
+		singleRun: options.single,
 
 		// Concurrency level
 		// how many browser should be started simultaneous
@@ -83,6 +83,6 @@ module.exports = (single = false) => {
 		},
 
 
-		webpack: webpackConfig(),
+		webpack: webpackConfig(options),
 	};
 };

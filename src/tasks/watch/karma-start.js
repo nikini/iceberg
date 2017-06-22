@@ -6,12 +6,12 @@ const karmaConfig = require('../../configs/karma-config.js');
 /**
  * Start the karma tests
  *
- * @param  {Boolean} [single=false]
+ * @param  {Object} [options={}]
  */
-module.exports = (single = false) => {
+module.exports = (options = {}) => {
 	cmd.log('Starting Karma');
 
-	const config = karmaConfig(single);
+	const config = karmaConfig(options);
 	const server = new KarmaServer(config, (exitCode) => {
 		if (exitCode > 0)
 			cmd.error(`Karma has exited with code ${exitCode}`);
