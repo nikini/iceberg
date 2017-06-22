@@ -33,22 +33,44 @@ module.exports = (options = {}) => {
 
 	const devServerPort = options.devPort || 9090;
 
-	// Output extracted CSS to a file
-	const extractPlugin = new ExtractTextPlugin({
-		filename: `${outputName}.css`,
-	});
-	const extractPluginConfig = extractPlugin.extract({
-		use: 'css-loader',
-		fallback: 'style-loader',
-	});
-
 	const plugins = [
 		new SassLintPlugin({
 			configFile: '.sass-lint.yml',
 			glob: `${scssPath}/**/*.s?(a|c)ss`,
 		}),
-		extractPlugin,
 	];
+
+	const scssLoaders = [{
+		// creates style nodes from JS strings
+		loader: 'style-loader',
+	}, {
+		// translates CSS into CommonJS
+		loader: 'css-loader',
+		options: {
+			sourceMap: true,
+		},
+	}, {
+		// Post CSS (for autoprefixer)
+		loader: 'postcss-loader',
+		options: {
+			plugins() {
+				return [
+					precss,
+					autoprefixer({
+						browsers: ['last 2 versions', '> 5%', 'ie 9', 'ie 10', 'ie 11'],
+					}),
+				];
+			},
+		},
+	}, {
+		// compiles Sass to CSS
+		loader: 'sass-loader',
+		options: {
+			sourceMap: true,
+			importer: [jsonImporter],
+			includePaths: [scssPath, jsPath],
+		},
+	}];
 
 	if (options.production)
 		plugins.concat(
@@ -68,13 +90,24 @@ module.exports = (options = {}) => {
 			})
 		);
 
-	if (!options.single) {
+	if (!options.single && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
 		entry.unshift('webpack/hot/dev-server');
 		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
 		plugins.push(hmrPlugin);
 		const namedModulesPlugin = new webpack.NamedModulesPlugin();
 		plugins.push(namedModulesPlugin);
+	} else {
+		// Output extracted CSS to a file
+		const extractPlugin = new ExtractTextPlugin({
+			filename: `${outputName}.css`,
+		});
+		const extractPluginConfig = extractPlugin.extract({
+			use: 'css-loader',
+			fallback: 'style-loader',
+		});
+		scssLoaders.unshift(extractPluginConfig[0]);
+		plugins.push(extractPlugin);
 	}
 
 	return {
@@ -111,37 +144,7 @@ module.exports = (options = {}) => {
 			}, {
 				test: /\.scss$/,
 				exclude: excludePath,
-				use: [extractPluginConfig[0], {
-					// creates style nodes from JS strings
-					loader: 'style-loader',
-				}, {
-					// translates CSS into CommonJS
-					loader: 'css-loader',
-					options: {
-						sourceMap: true,
-					},
-				}, {
-					// Post CSS (for autoprefixer)
-					loader: 'postcss-loader',
-					options: {
-						plugins() {
-							return [
-								precss,
-								autoprefixer({
-									browsers: ['last 2 versions', '> 5%', 'ie 9', 'ie 10', 'ie 11'],
-								}),
-							];
-						},
-					},
-				}, {
-					// compiles Sass to CSS
-					loader: 'sass-loader',
-					options: {
-						sourceMap: true,
-						importer: [jsonImporter],
-						includePaths: [scssPath, jsPath],
-					},
-				}],
+				use: scssLoaders,
 			}],
 		},
 
