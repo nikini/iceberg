@@ -10,6 +10,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cmd = require('../tasks/shared/cmd');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
+const babelConfig = require('./babel-config');
 
 /**
  * Function that spits out the webpack config
@@ -79,30 +80,23 @@ module.exports = (options = {}) => {
 				jsPath,
 				nodeModulesPath,
 			],
-			extensions: ['.js'],
+			extensions: ['.js', '.jsx'],
 		},
 
 		module: {
 			rules: [{
 				enforce: 'pre',
-				test: /\.js$/,
+				test: /(\.js|\.jsx)$/,
 				exclude: excludePath,
 				loader: 'eslint-loader',
 				options: eslintJson,
 			}, {
-				test: /\.js$/,
+				test: /(\.js|\.jsx)/,
 				exclude: excludePath,
 				use: {
 					loader: 'babel-loader',
+					options: babelConfig,
 				},
-			}, {
-				enforce: 'pre',
-				test: /\.html$/,
-				exclude: excludePath,
-				loader: 'htmlhint-loader',
-			}, {
-				test: /\.html$/,
-				loader: `ngtemplate-loader?relativeTo=${jsPath}/!html-loader`,
 			}, {
 				test: /\.scss$/,
 				exclude: excludePath,

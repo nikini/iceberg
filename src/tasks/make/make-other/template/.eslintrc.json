@@ -1,4 +1,8 @@
 {
+	"parser": "babel-eslint",
+	"plugins": [
+		"class-property"
+	],
 	"extends": "airbnb",
 	"rules": {
 		"max-len": "off",
@@ -15,6 +19,7 @@
 			"exports": "always-multiline",
 			"functions": "ignore"
 		}],
+		"class-property/class-property-semicolon": ["error", "always"],
 	    "no-unused-vars": "off",
 		"prefer-arrow-callback": "off",
 		"prefer-rest-params": "off",
