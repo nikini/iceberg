@@ -21,6 +21,15 @@ module.exports = (options = {}) => {
 				colors: true,
 			}));
 		});
+	else if (options.exclude.indexOf('dev-server') >= 0)
+		compiler.watch({}, (err, stats) => {
+			if (err)
+				cmd.error(err);
+			cmd.log(stats.toString({
+				chunks: false,
+				colors: true,
+			}));
+		});
 	else {
 		const server = new WebpackDevServer(compiler, config.devServer);
 		server.listen(config.devServer.port, 'localhost', () => {

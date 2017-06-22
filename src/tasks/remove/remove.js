@@ -16,18 +16,18 @@ module.exports = () => {
 	if (!cwdPackageConfig.devDependencies)
 		cwdPackageConfig.devDependencies = {};
 
-	if (!cwdPackageConfig.devDependencies.pasnow) {
-		cmd.error('Good news/Bad news: "pasnow" doesn\'t exists as a dev dependency.');
+	if (!cwdPackageConfig.devDependencies['iceberg-packer']) {
+		cmd.error('Good news/Bad news: "iceberg-packer" doesn\'t exists as a dev dependency.');
 		return;
 	}
 
-	// Remove the pasnow from the dev dependency
-	delete cwdPackageConfig.devDependencies.pasnow;
+	// Remove the iceberg-packer from the dev dependency
+	delete cwdPackageConfig.devDependencies['iceberg-packer'];
 
 	// Write it back to the file
 	cmd.runCountLog(() => {
 		packageConfig.set(cwdPackageConfig);
-	}, 'Removed "pasnow" as a dev dependency in {duration}', {});
+	}, 'Removed "iceberg-packer" as a dev dependency in {duration}', {});
 
 	cmd.log('Running npm prune now');
 
@@ -48,13 +48,13 @@ module.exports = () => {
 		const prompt = inquirer.createPromptModule();
 		prompt(questions).then((answers) => {
 			if (answers.removeConfig) {
-				const configPath = path.join(process.cwd(), '.snowConfig.json');
+				const configPath = path.join(process.cwd(), '.iceConfig.json');
 				if (shell.test('-e', configPath))
 					shell.rm(configPath);
 				else
 					cmd.warn('No configuration file found');
 			}
-			cmd.log('Succesfully removed "pasnow" in current directory');
+			cmd.log('Succesfully removed "iceberg-packer" in current directory');
 		});
 	});
 };

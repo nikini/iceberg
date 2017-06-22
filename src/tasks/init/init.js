@@ -17,18 +17,18 @@ module.exports = () => {
 	if (!cwdPackageConfig.devDependencies)
 		cwdPackageConfig.devDependencies = {};
 
-	if (cwdPackageConfig.devDependencies.pasnow) {
-		cmd.error(`"pasnow" already exists as a dev dependency: ${cwdPackageConfig.devDependencies.pasnow}`);
+	if (cwdPackageConfig.devDependencies['iceberg-packer']) {
+		cmd.error(`"iceberg-packer" already exists as a dev dependency: ${cwdPackageConfig.devDependencies['iceberg-packer']}`);
 		return;
 	}
 
-	// Add the pasnow to the dev dependency
-	cwdPackageConfig.devDependencies.pasnow = `^${currentPackage.version}`;
+	// Add the iceberg-packer to the dev dependency
+	cwdPackageConfig.devDependencies['iceberg-packer'] = `^${currentPackage.version}`;
 
 	// Write it back to the file
 	cmd.runCountLog(() => {
 		packageConfig.set(cwdPackageConfig);
-	}, 'Added "pasnow" as a dev dependency in {duration}', {});
+	}, 'Added "iceberg-packer" as a dev dependency in {duration}', {});
 
 	cmd.log('Running npm install now');
 
@@ -56,6 +56,6 @@ module.exports = () => {
 			make('config', answers.name);
 		});
 
-		cmd.log('Succesfully installed "pasnow" in current directory');
+		cmd.log('Succesfully installed "iceberg-packer" in current directory');
 	});
 };

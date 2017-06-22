@@ -8,7 +8,7 @@ const notifier = require('node-notifier');
  */
 module.exports = (message = '') => {
 	notifier.notify({
-		title: 'pasnow',
+		title: 'iceberg',
 		message,
 		sound: false, // Only Notification Center or Windows Toasters
 		wait: false,

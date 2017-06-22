@@ -36,6 +36,10 @@ module.exports = (only = '', property = 'watch') => {
 			watch: false,
 			run: true,
 		},
+		'dev-server': {
+			watch: true,
+			run: false,
+		},
 	};
 	const final = {};
 	each(tasks, (element, key) => {

@@ -38,11 +38,11 @@ program
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
-		console.log('    $ pasnow watch');
-		console.log('    $ pasnow watch -e karma,webpack');
-		console.log('    $ pasnow watch --exclude resources,cache,maven-compile');
-		console.log('    $ pasnow watch -s --silent');
-		console.log('    $ pasnow watch -e karma --dev-port 9091');
+		console.log('    $ iceberg watch');
+		console.log('    $ iceberg watch -e karma,webpack');
+		console.log('    $ iceberg watch --exclude resources,cache,maven-compile');
+		console.log('    $ iceberg watch -s --silent');
+		console.log('    $ iceberg watch -e karma --dev-port 9091');
 		console.log();
 		console.log('  For exclude you can use: ' + watchTasks);
 		console.log();
@@ -66,9 +66,9 @@ program
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
-		console.log('    $ pasnow run karma --silent');
-		console.log('    $ pasnow run webpack');
-		console.log('    $ pasnow run cache --host localhost --port 8080');
+		console.log('    $ iceberg run karma --silent');
+		console.log('    $ iceberg run webpack');
+		console.log('    $ iceberg run cache --host localhost --port 8080');
 		console.log();
 		console.log('  For package you can use: ' + runTasks);
 		console.log();
@@ -84,9 +84,9 @@ program
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
-		console.log('    $ pasnow make visualization -t component');
-		console.log('    $ pasnow make highcharts --type component');
-		console.log('    $ pasnow make -t lint-files');
+		console.log('    $ iceberg make visualization -t component');
+		console.log('    $ iceberg make highcharts --type component');
+		console.log('    $ iceberg make -t lint-files');
 		console.log();
 		console.log('  For type you can use: [component, config, lint-files]');
 		console.log();
@@ -101,14 +101,14 @@ program
 
 program
 	.command('init')
-	.description('Initializes pasnow in the current project (must have a package.json)')
+	.description('Initializes iceberg in the current project (must have a package.json)')
 	.action(() => {
 		init();
 	});
 
 program
 	.command('remove')
-	.description('Removes pasnow from the current project (must have a package.json)')
+	.description('Removes iceberg from the current project (must have a package.json)')
 	.action(() => {
 		remove();
 	});

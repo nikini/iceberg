@@ -31,6 +31,6 @@ module.exports = (type = '', name = '') => {
 	if (type === 'lint-files')
 		makeOther({
 			name,
-			exclude: ['.snowConfig.json'],
+			exclude: ['.iceConfig.json'],
 		});
 };

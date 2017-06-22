@@ -3,7 +3,7 @@
 [![NPM Version](http://img.shields.io/npm/v/iceberg-packer.svg?style=flat)](https://www.npmjs.org/package/iceberg-packer)
 [![NPM Downloads](https://img.shields.io/npm/dm/iceberg-packer.svg?style=flat)](https://www.npmjs.org/package/iceberg-packer)
 
-This tool has [webpack](https://github.com/webpack/webpack), [karma](https://github.com/karma-runner/karma) and other technologies built in to help you bundle and test your react modules
+This tool has [webpack](https://github.com/webpack/webpack), [karma](https://github.com/karma-runner/karma) and other technologies built in to help you bundle and test your React modules
 
 ## Installation
 
@@ -21,7 +21,7 @@ $ iceberg init
 
 ## Watch
 
-The watch starts the webpack watch, karma watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `karma`, `livereload`.
+The watch starts the webpack watch, karma watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `karma`, `livereload`, `dev-server`.
 
 ```
 $ iceberg watch
@@ -34,8 +34,9 @@ The options for the watch are:
  -e,  --exclude <packages>  what packages to exclude (separated by comma)
  -s,  --single              run once and then exit (webpack and karma)
  --silent                   this flag will hide OS notifications
- --host                     hostname for the cache clear
- --port                     port for the cache clea
+ --host <hostname>          hostname for the cache clear
+ --port <port>              port for the cache clea
+ --dev-port <dev-port>      port for the webpack-dev-server
 ```
 
 #### Examples
