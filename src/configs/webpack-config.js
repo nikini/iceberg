@@ -31,6 +31,7 @@ module.exports = (options = {}) => {
 	const outputPath = path.resolve(configuration.outputPath);
 	const outputName = configuration.outputName || '[name].bundle';
 
+	const devPath = path.resolve(configuration.devPath);
 	const devServerPort = options.devPort || 9090;
 
 	const plugins = [
@@ -155,6 +156,7 @@ module.exports = (options = {}) => {
 			inline: true,
 			compress: true,
 			port: devServerPort,
+			contentBase: devPath,
 		},
 	};
 };
