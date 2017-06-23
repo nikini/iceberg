@@ -113,7 +113,7 @@ module.exports = (options = {}) => {
 
 	return {
 		name: configuration.name || 'PA',
-		devtool: options.production ? undefined : 'source-map',
+		devtool: options.production ? undefined : 'inline-source-map',
 		entry,
 		output: {
 			path: outputPath,
