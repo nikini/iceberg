@@ -28,7 +28,9 @@ module.exports = (options = {}) => {
 	return {
 		cacheDirectory: true,
 		babelrc: false,
-		presets: ['react', 'es2015'],
+		presets: [
+			'react', 'es2015',
+		],
 		comments: false,
 		plugins: [
 			transformClassPropertiesPlugin,

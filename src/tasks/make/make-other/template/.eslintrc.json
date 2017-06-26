@@ -54,6 +54,7 @@
 		"no-plusplus": "off",
 		"strict": "off",
 		"no-constant-condition": "error",
+		"class-methods-use-this": "off",
 		"import/no-extraneous-dependencies": "off",
 		"import/no-unresolved": "off",
 		"import/newline-after-import": "off",
@@ -62,7 +63,11 @@
 		"import/extensions": "off",
 		"no-unresolved": "off",
     	"react/jsx-indent": [ "warn", "tab" ],
-		"react/prefer-stateless-function": "off"
+    	"react/jsx-indent-props": [ "warn", "tab" ],
+		"react/prefer-stateless-function": "off",
+		"react/no-unused-prop-types": "off",
+		"react/prop-types": "off",
+		"import/prefer-default-export": "off"
 	},
 	"env": {
 		"browser": true,

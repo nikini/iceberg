@@ -12,6 +12,8 @@ const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
 
+require('babel-polyfill');
+
 /**
  * Function that spits out the webpack config
  *
@@ -90,6 +92,9 @@ module.exports = (options = {}) => {
 				},
 			})
 		);
+
+	// For the sagas
+	entry.unshift('babel-polyfill');
 
 	if (!options.single && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
