@@ -136,6 +136,11 @@ module.exports = (options = {}) => {
 		module: {
 			rules: [{
 				enforce: 'pre',
+				test: /(\.json)$/,
+				exclude: excludePath,
+				loader: 'json-loader',
+			}, {
+				enforce: 'pre',
 				test: /(\.js|\.jsx)$/,
 				exclude: excludePath,
 				loader: 'eslint-loader',
@@ -162,6 +167,7 @@ module.exports = (options = {}) => {
 			compress: true,
 			port: devServerPort,
 			contentBase: devPath,
+			proxy: configuration.devProxy || {},
 		},
 	};
 };
