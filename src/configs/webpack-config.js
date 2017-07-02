@@ -22,8 +22,13 @@ require('babel-polyfill');
  * @return {Object}
  */
 module.exports = (options = {}) => {
-	const excludePath = /(node_modules|bower_components)/;
 	const configuration = getConfig();
+
+	// Get the exclude path
+	let excludePath = /(node_modules|bower_components)/;
+	if (configuration.excludePath)
+		excludePath = configuration.excludePath;
+
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
 	const entry = [path.join(path.resolve(jsPath), configuration.entry)];
