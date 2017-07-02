@@ -27,7 +27,7 @@ module.exports = (options = {}) => {
 	// Get the exclude path
 	let excludePath = /(node_modules|bower_components)/;
 	if (configuration.excludePath)
-		excludePath = configuration.excludePath;
+		excludePath = new RegExp(configuration.excludePath, 'i');
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
