@@ -25,9 +25,11 @@ module.exports = (options = {}) => {
 	const configuration = getConfig();
 
 	// Get the exclude path
-	let excludePath = /(node_modules|bower_components)/;
-	if (configuration.excludePath)
-		excludePath = new RegExp(configuration.excludePath, 'i');
+	const excludePaths = configuration.excludePath || ['node_modules', 'bower_components'];
+	const excludePath = [];
+	excludePaths.forEach((excludedPath) => {
+		excludePath.push(path.resolve(excludedPath));
+	});
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
