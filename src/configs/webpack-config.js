@@ -25,11 +25,9 @@ module.exports = (options = {}) => {
 	const configuration = getConfig();
 
 	// Get the exclude path
-	const excludePaths = configuration.excludePath || ['node_modules', 'bower_components'];
-	const excludePath = [];
-	excludePaths.forEach((excludedPath) => {
-		excludePath.push(path.resolve(excludedPath));
-	});
+	let excludePath = /(node_modules|bower_components)/;
+	if (configuration.excludePath)
+		excludePath = new RegExp(configuration.excludePath.join('|'), 'i');
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
@@ -50,7 +48,7 @@ module.exports = (options = {}) => {
 		}),
 	];
 
-	const scssLoaders = [{
+	const cssLoaders = [{
 		// creates style nodes from JS strings
 		loader: 'style-loader',
 	}, {
@@ -72,7 +70,9 @@ module.exports = (options = {}) => {
 				];
 			},
 		},
-	}, {
+	}];
+
+	const scssLoaders = cssLoaders.concat([{
 		// compiles Sass to CSS
 		loader: 'sass-loader',
 		options: {
@@ -80,7 +80,7 @@ module.exports = (options = {}) => {
 			importer: [jsonImporter],
 			includePaths: [scssPath, jsPath],
 		},
-	}];
+	}]);
 
 	if (options.production)
 		plugins.concat(
@@ -119,6 +119,7 @@ module.exports = (options = {}) => {
 			use: 'css-loader',
 			fallback: 'style-loader',
 		});
+		cssLoaders.unshift(extractPluginConfig[0]);
 		scssLoaders.unshift(extractPluginConfig[0]);
 		plugins.push(extractPlugin);
 	}
@@ -163,6 +164,9 @@ module.exports = (options = {}) => {
 				test: /\.scss$/,
 				exclude: excludePath,
 				use: scssLoaders,
+			}, {
+				test: /\.css$/,
+				use: cssLoaders,
 			}],
 		},
 
