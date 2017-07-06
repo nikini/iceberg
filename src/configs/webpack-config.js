@@ -176,6 +176,9 @@ module.exports = (options = {}) => {
 			hot: true,
 			inline: true,
 			compress: true,
+			stats: {
+				colors: true,
+			},
 			port: devServerPort,
 			contentBase: devPath,
 			proxy: configuration.devProxy || {},
