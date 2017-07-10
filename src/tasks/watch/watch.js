@@ -20,6 +20,10 @@ const getConfig = require('../shared/get-config');
 module.exports = (options = {}, onChange) => {
 	const configuration = getConfig();
 
+	// Default values
+	options.host = options.host || 'localhost';
+	options.port = options.port || 8080;
+
 	cmd.log('Starting watch');
 
 	// Variable used by livereload later, if needed

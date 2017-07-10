@@ -6,6 +6,7 @@ const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const each = require('lodash/each');
 
 const cmd = require('../tasks/shared/cmd');
 const getConfig = require('../tasks/shared/get-config');
@@ -40,6 +41,12 @@ module.exports = (options = {}) => {
 
 	const devPath = path.resolve(configuration.devPath);
 	const devServerPort = options.devPort || 9090;
+
+	const devProxy = configuration.devProxy || {};
+	each(devProxy, (value, key) => {
+		devProxy[key] = value.replace('{port}', options.port);
+		devProxy[key] = value.replace('{host}', options.host);
+	});
 
 	const plugins = [
 		new SassLintPlugin({
@@ -182,7 +189,7 @@ module.exports = (options = {}) => {
 			},
 			port: devServerPort,
 			contentBase: devPath,
-			proxy: configuration.devProxy || {},
+			proxy: devProxy,
 		},
 	};
 };
