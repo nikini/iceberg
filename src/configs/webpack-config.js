@@ -44,8 +44,10 @@ module.exports = (options = {}) => {
 
 	const devProxy = configuration.devProxy || {};
 	each(devProxy, (value, key) => {
-		devProxy[key] = value.replace('{port}', options.port);
-		devProxy[key] = value.replace('{host}', options.host);
+		let newValue = value;
+		newValue = newValue.replace('{port}', options.port);
+		newValue = newValue.replace('{host}', options.host);
+		devProxy[key] = newValue;
 	});
 
 	const plugins = [
