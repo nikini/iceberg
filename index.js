@@ -20,7 +20,7 @@ program
 	.command('watch')
 	.description('Watch files, copy resources, build SASS and JS (if needed)')
 	.option('-e, --exclude <packages>', 'What to exclude (if not already excluded)')
-	.option('-s, --single', 'Run once and then exit (webpack and karma)')
+	.option('-s, --single', 'Run once and then exit (webpack and jest)')
 	.option('--silent', 'This flag will hide OS notifications')
 	.option('--host <hostname>', 'Hostname for the cache clear')
 	.option('--port <port>', 'Port for the cache clear')
@@ -39,10 +39,10 @@ program
 		console.log('  Examples:');
 		console.log();
 		console.log('    $ iceberg watch');
-		console.log('    $ iceberg watch -e karma,webpack');
+		console.log('    $ iceberg watch -e jest,webpack');
 		console.log('    $ iceberg watch --exclude resources,cache,maven-compile');
 		console.log('    $ iceberg watch -s --silent');
-		console.log('    $ iceberg watch -e karma --dev-port 9091');
+		console.log('    $ iceberg watch -e jest --dev-port 9091');
 		console.log();
 		console.log('  For exclude you can use: ' + watchTasks);
 		console.log();
@@ -66,7 +66,7 @@ program
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
-		console.log('    $ iceberg run karma --silent');
+		console.log('    $ iceberg run jest --silent');
 		console.log('    $ iceberg run webpack');
 		console.log('    $ iceberg run cache --host localhost --port 8080');
 		console.log();

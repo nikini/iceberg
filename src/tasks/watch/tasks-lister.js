@@ -24,7 +24,7 @@ module.exports = (only = '', property = 'watch') => {
 			watch: true,
 			run: true,
 		},
-		karma: {
+		jest: {
 			watch: true,
 			run: true,
 		},

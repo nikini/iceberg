@@ -4,7 +4,7 @@ const cmd = require('../shared/cmd');
 const mavenCompile = require('../watch/maven-compile');
 const cacheClear = require('../watch/cache-clear');
 const webpackWatch = require('../watch/webpack-watch');
-const karmaStart = require('../watch/karma-start');
+const jestStart = require('../jest/jest-start');
 const flowCheck = require('../watch/flow-check');
 
 /**
@@ -22,8 +22,8 @@ module.exports = (options = {}) => {
 		});
 		break;
 
-	case 'karma':
-		karmaStart({
+	case 'jest':
+		jestStart({
 			single: true,
 		});
 		break;

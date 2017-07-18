@@ -8,7 +8,7 @@ const mavenCompile = require('./maven-compile');
 const cacheClear = require('./cache-clear');
 const copyFile = require('./copy-file');
 const webpackWatch = require('./webpack-watch');
-const karmaStart = require('./karma-start');
+const jestStart = require('../jest/jest-start');
 const getConfig = require('../shared/get-config');
 
 /**
@@ -50,9 +50,9 @@ module.exports = (options = {}, onChange) => {
 	if (options.exclude.indexOf('webpack') < 0)
 		webpackWatch(options);
 
-	// Start the karma server
-	if (options.exclude.indexOf('karma') < 0)
-		karmaStart(options);
+	// Start the jest server
+	if (options.exclude.indexOf('jest') < 0)
+		jestStart(options);
 
 	// On changed / added / deleted
 	gaze.on('all', (eventType, filepath) => {

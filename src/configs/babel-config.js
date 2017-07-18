@@ -45,6 +45,9 @@ module.exports = (options = {}) => {
 					['transform-react-display-name'],
 				],
 			},
+			test: {
+				plugins: ['transform-es2015-modules-commonjs'],
+			},
 		},
 	};
 };

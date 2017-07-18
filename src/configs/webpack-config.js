@@ -193,5 +193,12 @@ module.exports = (options = {}) => {
 			contentBase: devPath,
 			proxy: devProxy,
 		},
+
+		externals: {
+			cheerio: 'window',
+			'react/addons': 'react',
+			'react/lib/ExecutionEnvironment': 'react',
+			'react/lib/ReactContext': 'react',
+		},
 	};
 };

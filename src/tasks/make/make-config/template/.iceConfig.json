@@ -15,7 +15,6 @@
 		"entry": "<%= entry %>",
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
 		"outputName": "[name].bundle",
-		"devPath": "src/main/plugins/<%= plugin %>/ui.html/bundles/dev",
-		"extraKarmaFiles": []
+		"devPath": "src/main/plugins/<%= plugin %>/ui.html/bundles/dev"
 	}
 }
