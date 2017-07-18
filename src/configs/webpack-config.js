@@ -6,9 +6,12 @@ const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
 const SassLintPlugin = require('sasslint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const colors = require('colors');
 const each = require('lodash/each');
 
 const cmd = require('../tasks/shared/cmd');
+const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
@@ -54,6 +57,11 @@ module.exports = (options = {}) => {
 		new SassLintPlugin({
 			configFile: '.sass-lint.yml',
 			glob: `${scssPath}/**/*.s?(a|c)ss`,
+		}),
+		new ProgressBarPlugin({
+			clear: false,
+			summary: false,
+			format: now() + ' Bundling [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
 		}),
 	];
 
@@ -186,12 +194,17 @@ module.exports = (options = {}) => {
 			hot: true,
 			inline: true,
 			compress: true,
-			stats: {
-				colors: true,
-			},
 			port: devServerPort,
 			contentBase: devPath,
 			proxy: devProxy,
+			stats: {
+				assets: false,
+				chunks: false,
+				chunkModules: false,
+				modules: false,
+				children: false,
+				colors: true,
+			},
 		},
 
 		externals: {

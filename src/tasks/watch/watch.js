@@ -51,8 +51,12 @@ module.exports = (options = {}, onChange) => {
 		webpackWatch(options);
 
 	// Start the jest server
-	if (options.exclude.indexOf('jest') < 0)
+	if (options.exclude.indexOf('jest') < 0) {
+		if (options.exclude.indexOf('webpack') < 0)
+			// This is because of a bug caused by the ProgressBarWebpackPlugin
+			console.log('');
 		jestStart(options);
+	}
 
 	// On changed / added / deleted
 	gaze.on('all', (eventType, filepath) => {

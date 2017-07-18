@@ -1,4 +1,5 @@
 const cmd = require('../shared/cmd');
+const now = require('../shared/now');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('../../configs/webpack-config');
