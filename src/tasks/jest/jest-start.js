@@ -30,14 +30,21 @@ module.exports = (options = {}) => {
 			watch: false,
 			verbose: true,
 			collectCoverage: true,
+			collectCoverageFrom: configuration.coverageCollection,
 			transform: {
 				'^.+\\.(js|jsx)': path.resolve(__dirname, 'jest-transform.js'),
 			},
 			moduleNameMapper: {
 				'\\.(css|scss)$': 'identity-obj-proxy',
 			},
+			coverageThreshold: {
+				global: configuration.minimumCoverage,
+			},
 		},
 	};
+
+	if (!jestOptions.config.collectCoverageFrom)
+		delete jestOptions.config.collectCoverageFrom;
 
 	jest.runCLI(jestOptions, [jestOptions.config.rootDir]);
 

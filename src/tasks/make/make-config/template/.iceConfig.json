@@ -15,6 +15,13 @@
 		"testWatchPaths": [
 			"src/main/plugins/<%= plugin %>/ui.html/sources/js/**/*"
 		],
+		"coverageCollection": [],
+		"minimumCoverage": {
+			"branches": 90,
+			"functions": 100,
+			"lines": 95,
+			"statements": 90
+		},
 		"entry": "<%= entry %>",
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
 		"outputName": "[name].bundle",
