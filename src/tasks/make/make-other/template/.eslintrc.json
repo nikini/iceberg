@@ -1,7 +1,8 @@
 {
 	"parser": "babel-eslint",
 	"plugins": [
-		"class-property"
+		"class-property",
+		"react"
 	],
 	"extends": "airbnb",
 	"rules": {

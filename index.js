@@ -54,13 +54,14 @@ program
 	.option('--silent', 'This flag will hide OS notifications')
 	.option('--host <hostname>', 'Hostname for the cache clear')
 	.option('--port <port>', 'Port for the cache clear')
+	.option('--fix', 'This is only useful for eslint. Fixes some linting errors')
 	.action((packageName, options) => {
-		console.log('package', packageName);
 		run({
 			package: packageName,
 			silent: Boolean(options.silent),
 			host: options.host,
 			port: options.port,
+			fix: options.fix,
 		});
 	})
 	.on('--help', () => {
@@ -69,6 +70,7 @@ program
 		console.log('    $ iceberg run jest --silent');
 		console.log('    $ iceberg run webpack');
 		console.log('    $ iceberg run cache --host localhost --port 8080');
+		console.log('    $ iceberg run eslint --fix');
 		console.log();
 		console.log('  For package you can use: ' + runTasks);
 		console.log();

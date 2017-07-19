@@ -62,6 +62,7 @@ The options for the run are:
  --silent                   this flag will hide OS notifications
  --host                     hostname for the cache clear
  --port                     port for the cache clear
+ --fix                      this is only useful for eslint - fixes some linting errors
 ```
 
 #### Examples
@@ -70,6 +71,7 @@ The options for the run are:
 $ iceberg run jest --silent
 $ iceberg run webpack
 $ iceberg run cache --host localhost --port 8081
+$ iceberg run eslint --fix
 ```
 
 ## Make

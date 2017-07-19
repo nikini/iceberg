@@ -6,6 +6,7 @@ const cacheClear = require('../watch/cache-clear');
 const webpackWatch = require('../watch/webpack-watch');
 const jestStart = require('../jest/jest-start');
 const flowCheck = require('../watch/flow-check');
+const runEslint = require('./run-eslint');
 
 /**
  * Run only one package
@@ -13,7 +14,7 @@ const flowCheck = require('../watch/flow-check');
  * @param  {Object} options
  */
 module.exports = (options = {}) => {
-	cmd.log('Running ' + options.package);
+	cmd.log('Running "' + options.package + '"');
 
 	switch (options.package) {
 	case 'webpack':
@@ -25,6 +26,12 @@ module.exports = (options = {}) => {
 	case 'jest':
 		jestStart({
 			single: true,
+		});
+		break;
+
+	case 'eslint':
+		runEslint({
+			fix: options.fix,
 		});
 		break;
 
