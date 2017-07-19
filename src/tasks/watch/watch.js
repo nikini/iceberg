@@ -29,11 +29,6 @@ module.exports = (options = {}, onChange) => {
 	// Variable used by livereload later, if needed
 	let livereloadServer;
 
-	const gaze = new Gaze(configuration.watchPaths);
-	gaze.on('ready', (watcher) => {
-		cmd.log('Started watching files for changes');
-	});
-
 	// File extension for the files that will get copied
 	const resourcesExtensions = [
 		'js', 'map', 'json', 'html', 'css', 'xml',
@@ -51,12 +46,13 @@ module.exports = (options = {}, onChange) => {
 		webpackWatch(options);
 
 	// Start the jest server
-	if (options.exclude.indexOf('jest') < 0) {
-		if (options.exclude.indexOf('webpack') < 0)
-			// This is because of a bug caused by the ProgressBarWebpackPlugin
-			console.log('');
+	if (options.exclude.indexOf('jest') < 0)
 		jestStart(options);
-	}
+
+	const gaze = new Gaze(configuration.watchPaths);
+	gaze.on('ready', (watcher) => {
+		cmd.log('Started watching files for changes');
+	});
 
 	// On changed / added / deleted
 	gaze.on('all', (eventType, filepath) => {

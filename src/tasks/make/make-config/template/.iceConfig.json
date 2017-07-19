@@ -12,6 +12,9 @@
 			"!src/main/plugins/<%= plugin %>/upload/**/*",
 			"!src/main/plugins/<%= plugin %>/apply_once/**/*"
 		],
+		"testWatchPaths": [
+			"src/main/plugins/<%= plugin %>/ui.html/sources/js/**/*"
+		],
 		"entry": "<%= entry %>",
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
 		"outputName": "[name].bundle",

@@ -1,3 +1,4 @@
+const Gaze = require('gaze').Gaze;
 const cmd = require('../shared/cmd');
 const jest = require('jest-cli');
 const path = require('path');
@@ -9,6 +10,10 @@ const getConfig = require('../shared/get-config');
  * @param  {Object} [options={}]
  */
 module.exports = (options = {}) => {
+	if (options.exclude && options.exclude.indexOf('webpack') < 0)
+		// This is because of a bug caused by the ProgressBarWebpackPlugin
+		console.log('');
+
 	cmd.log('Starting Jest');
 
 	const configuration = getConfig();
@@ -22,7 +27,7 @@ module.exports = (options = {}) => {
 				path.resolve(__dirname, '../../../node_modules'),
 				modulePath,
 			],
-			watch: !options.single,
+			watch: false,
 			verbose: true,
 			collectCoverage: true,
 			transform: {
@@ -35,4 +40,18 @@ module.exports = (options = {}) => {
 	};
 
 	jest.runCLI(jestOptions, [jestOptions.config.rootDir]);
+
+	if (configuration.testWatchPaths && configuration.testWatchPaths.length && !options.single) {
+		const gaze = new Gaze(configuration.testWatchPaths);
+		gaze.on('ready', (watcher) => {
+			cmd.log('Started watching test files for changes');
+		});
+
+		// On changed / added / deleted
+		gaze.on('all', (eventType, filepath) => {
+			// Only rerun for test files
+			if (/\.spec\.(js|jsx)$/.test(filepath))
+				jest.runCLI(jestOptions, [jestOptions.config.rootDir]);
+		});
+	}
 };
