@@ -28,6 +28,10 @@ module.exports = (only = '', property = 'watch') => {
 			watch: true,
 			run: true,
 		},
+		eslint: {
+			watch: false,
+			run: true,
+		},
 		livereload: {
 			watch: true,
 			run: false,

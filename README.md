@@ -49,7 +49,7 @@ $ iceberg watch -s --silent
 
 ## Run
 
-The run command starts a task, like: `cache`, `maven-compile`, `webpack`, `jest`, `flow-check`.
+The run command starts a task, like: `cache`, `maven-compile`, `webpack`, `jest`, `flow-check`, `eslint`.
 
 ```
 $ iceberg run <package>
