@@ -30,7 +30,7 @@ module.exports = (options = {}) => {
 			watch: false,
 			verbose: true,
 			collectCoverage: true,
-			collectCoverageFrom: configuration.coverageCollection,
+			collectCoverageFrom: options.hideFullCoverage ? false : configuration.coverageCollection,
 			transform: {
 				'^.+\\.(js|jsx)': path.resolve(__dirname, 'jest-transform.js'),
 			},
@@ -40,6 +40,7 @@ module.exports = (options = {}) => {
 			coverageThreshold: {
 				global: configuration.minimumCoverage,
 			},
+			coverageReporters: ['text'],
 		},
 	};
 

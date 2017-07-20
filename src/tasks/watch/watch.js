@@ -46,8 +46,12 @@ module.exports = (options = {}, onChange) => {
 		webpackWatch(options);
 
 	// Start the jest server
-	if (options.exclude.indexOf('jest') < 0)
-		jestStart(options);
+	if (options.exclude.indexOf('jest') < 0) {
+		const jestStartOptions = Object.assign({}, options, {
+			hideFullCoverage: true,
+		});
+		jestStart(jestStartOptions);
+	}
 
 	const gaze = new Gaze(configuration.watchPaths);
 	gaze.on('ready', (watcher) => {
