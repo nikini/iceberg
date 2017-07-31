@@ -78,5 +78,8 @@
 	"env": {
 		"browser": true,
 		"node": true
+	},
+	"globals": {
+		"ENVIRONMENT": true
 	}
 }

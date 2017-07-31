@@ -108,6 +108,7 @@ module.exports = (options = {}) => {
 				'process.env': {
 					NODE_ENV: JSON.stringify('production'),
 				},
+				ENVIRONMENT: JSON.stringify('production'),
 			}),
 			new webpack.LoaderOptionsPlugin({
 				minimize: true,
@@ -119,6 +120,10 @@ module.exports = (options = {}) => {
 				},
 			})
 		);
+	else
+		plugins.push(new webpack.DefinePlugin({
+			ENVIRONMENT: JSON.stringify('development'),
+		}));
 
 	// For the sagas
 	entry.unshift('babel-polyfill');
