@@ -12,6 +12,8 @@ module.exports = (options = {}) => {
 		['transform-object-rest-spread'],
 		['transform-react-display-name'],
 		['transform-function-bind'],
+		['transform-decorators-legacy'],
+		transformClassPropertiesPlugin,
 	];
 
 	if (!options.single)
@@ -37,9 +39,6 @@ module.exports = (options = {}) => {
 			}],
 		],
 		comments: false,
-		plugins: [
-			transformClassPropertiesPlugin,
-		],
 		env: {
 			development: {
 				plugins: developmentPlugins,
@@ -49,6 +48,8 @@ module.exports = (options = {}) => {
 					['transform-object-rest-spread'],
 					['transform-react-display-name'],
 					['transform-function-bind'],
+					['transform-decorators-legacy'],
+					transformClassPropertiesPlugin,
 				],
 			},
 			test: {

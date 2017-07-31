@@ -9,6 +9,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const colors = require('colors');
 const each = require('lodash/each');
+const isPlainObject = require('lodash/isPlainObject');
+const keys = require('lodash/keys');
 
 const cmd = require('../tasks/shared/cmd');
 const now = require('../tasks/shared/now');
@@ -120,6 +122,12 @@ module.exports = (options = {}) => {
 
 	// For the sagas
 	entry.unshift('babel-polyfill');
+
+	// Add the eslint path to the config and make the globals an array (for some
+	// reason eslint for node doesn't allow for an object)
+	eslintJson.eslintPath = path.join(packageNodeModulesPath, 'eslint');
+	if (isPlainObject(eslintJson.globals))
+		eslintJson.globals = keys(eslintJson.globals);
 
 	if (!options.single && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);

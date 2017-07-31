@@ -54,7 +54,8 @@
     "import/newline-after-import": "off",
     "import/first": "off",
     "import/extensions": "off",
-	"no-unresolved": "off"
+	"no-unresolved": "off",
+	"jsx-a11y/href-no-hash": "off"
   },
   "env": {
 	"browser": true,
