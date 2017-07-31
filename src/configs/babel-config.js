@@ -11,6 +11,7 @@ module.exports = (options = {}) => {
 	const developmentPlugins = [
 		['transform-object-rest-spread'],
 		['transform-react-display-name'],
+		['transform-function-bind'],
 	];
 
 	if (!options.single)
@@ -29,7 +30,11 @@ module.exports = (options = {}) => {
 		cacheDirectory: true,
 		babelrc: false,
 		presets: [
-			'react', 'es2015',
+			'react', ['env', {
+				targets: {
+					browsers: ['> 1%', 'last 2 versions'],
+				},
+			}],
 		],
 		comments: false,
 		plugins: [
@@ -43,6 +48,7 @@ module.exports = (options = {}) => {
 				plugins: [
 					['transform-object-rest-spread'],
 					['transform-react-display-name'],
+					['transform-function-bind'],
 				],
 			},
 			test: {
