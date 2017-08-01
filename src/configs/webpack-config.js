@@ -1,10 +1,10 @@
+const fs = require('fs');
 const path = require('path');
 const shell = require('shelljs');
 const precss = require('precss');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
-const SassLintPlugin = require('sasslint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const colors = require('colors');
@@ -17,6 +17,8 @@ const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
+
+const sassLintLoader = require('../loaders/sass-lint-loader');
 
 require('babel-polyfill');
 
@@ -55,11 +57,7 @@ module.exports = (options = {}) => {
 		devProxy[key] = newValue;
 	});
 
-	const plugins = [
-		new SassLintPlugin({
-			configFile: '.sass-lint.yml',
-			glob: `${scssPath}/**/*.s?(a|c)ss`,
-		}),
+	let plugins = [
 		new ProgressBarPlugin({
 			clear: false,
 			summary: false,
@@ -103,7 +101,7 @@ module.exports = (options = {}) => {
 	}]);
 
 	if (options.production)
-		plugins.concat(
+		plugins = plugins.concat([
 			new webpack.DefinePlugin({
 				'process.env': {
 					NODE_ENV: JSON.stringify('production'),
@@ -118,8 +116,8 @@ module.exports = (options = {}) => {
 				compress: {
 					warnings: false,
 				},
-			})
-		);
+			}),
+		]);
 	else
 		plugins.push(new webpack.DefinePlugin({
 			ENVIRONMENT: JSON.stringify('development'),
@@ -131,6 +129,11 @@ module.exports = (options = {}) => {
 	// Add the eslint path to the config and make the globals an array (for some
 	// reason eslint for node doesn't allow for an object)
 	eslintJson.eslintPath = path.join(packageNodeModulesPath, 'eslint');
+	if (!fs.existsSync(eslintJson.eslintPath))
+		eslintJson.eslintPath = path.join(nodeModulesPath, 'eslint');
+	if (!fs.existsSync(eslintJson.eslintPath))
+		delete eslintJson.eslintPath;
+
 	if (isPlainObject(eslintJson.globals))
 		eslintJson.globals = keys(eslintJson.globals);
 
@@ -171,6 +174,11 @@ module.exports = (options = {}) => {
 			],
 			extensions: ['.js', '.jsx'],
 		},
+		resolveLoader: {
+			alias: {
+				'custom-sass-lint-loader': path.join(__dirname, '../loaders/sass-lint-loader'),
+			},
+		},
 
 		module: {
 			rules: [{
@@ -195,6 +203,13 @@ module.exports = (options = {}) => {
 				test: /\.scss$/,
 				exclude: excludePath,
 				use: scssLoaders,
+			}, {
+				enforce: 'pre',
+				test: /\.scss$/,
+				exclude: excludePath,
+				use: {
+					loader: 'custom-sass-lint-loader',
+				},
 			}, {
 				test: /\.css$/,
 				use: cssLoaders,
