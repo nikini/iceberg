@@ -89,14 +89,16 @@ The options for the make are:
  -t, --type <type>	the type of element you are scaffolding
 ```
 
-For type you can use: `component`, `config`, `lint-files`.
+For type you can use: `component`, `prop-type`, `config`, `lint-files`.
 
 #### Examples
 
 ```
-$ iceberg make visualization -t component
+$ iceberg make common/visualization -t component
+$ iceberg make highcharts --type component
 $ iceberg make --type lint-files
 $ iceberg make -t config
+$ iceberg make common/visualization/chart-options -t prop-type
 ```
 
 ## Build

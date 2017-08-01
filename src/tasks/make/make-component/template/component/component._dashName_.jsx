@@ -1,13 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// Components
-// ...
-
 // Style
 import './component.<%= dashName %>.scss';
 
+// Components
+// ...
+
 export default class <%= className %>Component extends React.Component {
+	/**
+	 * Define the prop types for the component
+	 *
+	 * @type {Object}
+	 */
+	static propTypes = {};
+
+	/**
+	 * Define the default prop values for the component
+	 *
+	 * @type {Object}
+	 */
+	static defaultProps = {};
+
 	/**
 	 * Render the component
 	 *
@@ -15,25 +29,7 @@ export default class <%= className %>Component extends React.Component {
 	 */
 	render() {
 		return (
-			<div className="pa-<%= dashName %>" />
+			<div className="<%= cssClassName %>" />
 		);
 	}
 }
-
-/**
- * Define the prop types for the component
- *
- * @type {Object}
- */
-<%= className %>Component.propTypes = {
-	// ...
-};
-
-/**
- * Define the default prop values for the component
- *
- * @type {Object}
- */
-<%= className %>Component.defaultProps = {
-	// ...
-};

@@ -86,11 +86,12 @@ program
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
-		console.log('    $ iceberg make visualization -t component');
+		console.log('    $ iceberg make common/visualization -t component');
 		console.log('    $ iceberg make highcharts --type component');
 		console.log('    $ iceberg make -t lint-files');
+		console.log('    $ iceberg make common/visualization/chart-options -t prop-type');
 		console.log();
-		console.log('  For type you can use: [component, config, lint-files]');
+		console.log('  For type you can use: [component, prop-type, config, lint-files]');
 		console.log();
 	});
 

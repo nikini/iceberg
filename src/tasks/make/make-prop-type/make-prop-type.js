@@ -1,36 +1,30 @@
 const shell = require('shelljs');
 const path = require('path');
 const cmd = require('../../shared/cmd');
-const getComponentDataFromName = require('./helpers/get-component-data-from-name');
+const getPropTypeDataFromName = require('./helpers/get-prop-type-data-from-name');
 const getDestination = require('../helpers/get-destination');
 
 const template = require('lodash/template');
 
 /**
- * Scaffold a component
+ * Scaffold a prop type
  *
  * @param  {string} name
  */
 module.exports = (name = '') => {
 	if (!name) {
-		cmd.error('You must provide a component name');
+		cmd.error('You must provide a prop type name');
 		return;
 	}
-	const data = getComponentDataFromName(name);
+	const data = getPropTypeDataFromName(name);
+	const destination = getDestination(name);
+	const templateDir = path.join(__dirname, 'template');
 
-	const destination = path.join(getDestination(name), data.dirName);
-	cmd.runCountLog(() => {
-		shell.mkdir('-p', destination);
-	}, 'Created directory {destination} in {duration}', {
-		destination,
-	});
-
-	const templateDir = path.join(__dirname, 'template', 'component');
-	shell.ls('-A', templateDir).forEach((file) => {
+	shell.ls('-A', templateDir).forEach((filename) => {
 		// Copy the file (as is)
-		const compiledFileName = file.replace(/_dashName_/g, data.dashName);
+		const compiledFileName = filename.replace(/_dashName_/g, data.dashName);
 		const fileDestination = path.join(destination, compiledFileName);
-		const filePath = path.join(templateDir, file);
+		const filePath = path.join(templateDir, filename);
 
 		// Count the operation
 		cmd.runCountLog(() => {
@@ -41,7 +35,7 @@ module.exports = (name = '') => {
 			const fileContents = shell.ShellString(compiledTemplate(data));
 			fileContents.to(fileDestination);
 		}, 'Created the file {file} in {duration}', {
-			file: path.join(data.dirName, compiledFileName),
+			file: compiledFileName,
 		});
 	});
 };
