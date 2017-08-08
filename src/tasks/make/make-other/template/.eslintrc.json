@@ -21,8 +21,8 @@
 			"functions": "ignore"
 		}],
 		"class-property/class-property-semicolon": ["error", "always"],
-	    "no-unused-vars": "off",
-		"prefer-arrow-callback": "off",
+	    "no-unused-vars": ["warn"],
+		"prefer-arrow-callback": ["warn"],
 		"prefer-rest-params": "off",
 		"prefer-template": "off",
 		"no-console": "off",
