@@ -49,6 +49,10 @@ module.exports = (options = {}) => {
 					['transform-react-display-name'],
 					['transform-function-bind'],
 					['transform-decorators-legacy'],
+					['transform-runtime', {
+						polyfill: false,
+						regenerator: true,
+					}],
 					transformClassPropertiesPlugin,
 				],
 			},

@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const shell = require('shelljs');
 const precss = require('precss');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
@@ -12,13 +11,10 @@ const each = require('lodash/each');
 const isPlainObject = require('lodash/isPlainObject');
 const keys = require('lodash/keys');
 
-const cmd = require('../tasks/shared/cmd');
 const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
-
-const sassLintLoader = require('../loaders/sass-lint-loader');
 
 require('babel-polyfill');
 
@@ -123,9 +119,6 @@ module.exports = (options = {}) => {
 			ENVIRONMENT: JSON.stringify('development'),
 		}));
 
-	// For the sagas
-	entry.unshift('babel-polyfill');
-
 	// Add the eslint path to the config and make the globals an array (for some
 	// reason eslint for node doesn't allow for an object)
 	eslintJson.eslintPath = path.join(packageNodeModulesPath, 'eslint');
@@ -144,6 +137,9 @@ module.exports = (options = {}) => {
 		plugins.push(hmrPlugin);
 		const namedModulesPlugin = new webpack.NamedModulesPlugin();
 		plugins.push(namedModulesPlugin);
+
+		// For the sagas
+		entry.unshift('babel-polyfill');
 	} else {
 		// Output extracted CSS to a file
 		const extractPlugin = new ExtractTextPlugin({
@@ -156,6 +152,9 @@ module.exports = (options = {}) => {
 		cssLoaders.unshift(extractPluginConfig[0]);
 		scssLoaders.unshift(extractPluginConfig[0]);
 		plugins.push(extractPlugin);
+
+		// For the sagas
+		entry.unshift('babel-regenerator-runtime');
 	}
 
 	return {
@@ -213,6 +212,9 @@ module.exports = (options = {}) => {
 			}, {
 				test: /\.css$/,
 				use: cssLoaders,
+			}, {
+				test: /highcharts\/highstock/,
+				use: options.production ? 'null-loader' : 'noop-loader',
 			}],
 		},
 
