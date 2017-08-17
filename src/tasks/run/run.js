@@ -7,6 +7,7 @@ const webpackWatch = require('../watch/webpack-watch');
 const jestStart = require('../jest/jest-start');
 const flowCheck = require('../watch/flow-check');
 const runEslint = require('./run-eslint');
+const tasksLister = require('../watch/tasks-lister');
 
 /**
  * Run only one package
@@ -14,6 +15,12 @@ const runEslint = require('./run-eslint');
  * @param  {Object} options
  */
 module.exports = (options = {}) => {
+	const runTasks = tasksLister('', 'run');
+	if (runTasks.indexOf(options.package) < 0) {
+		cmd.error('Package "' + options.package + '" not found');
+		return;
+	}
+
 	cmd.log('Running "' + options.package + '"');
 
 	switch (options.package) {

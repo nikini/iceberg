@@ -37,6 +37,7 @@ The options for the watch are:
  --host <hostname>          hostname for the cache clear
  --port <port>              port for the cache clea
  --dev-port <dev-port>      port for the webpack-dev-server
+ --prod                     production environment (builds just like for production without the split)
 ```
 
 #### Examples
@@ -45,6 +46,7 @@ The options for the watch are:
 $ iceberg watch --e jest,webpack
 $ iceberg watch --exclude resources,cache,maven-compile
 $ iceberg watch -s --silent
+$ iceberg watch --prod
 ```
 
 ## Run

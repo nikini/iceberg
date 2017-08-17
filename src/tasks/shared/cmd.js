@@ -37,6 +37,17 @@ module.exports = {
 	},
 
 	/**
+	 * Console success arguments (it runs a log with green)
+	 */
+	success(...args) {
+		const parameters = args.map((param) => {
+			return colors.green(param);
+		});
+		parameters.unshift(now());
+		console.log.apply(console, parameters);
+	},
+
+	/**
 	 * Run a function, count how long it takes and log the ending
 	 *
 	 * @param  {Function} callback

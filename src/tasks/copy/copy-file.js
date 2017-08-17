@@ -4,7 +4,7 @@ const notify = require('../shared/notify');
 const path = require('path');
 
 /**
- * Clears the cache
+ * Copies one file
  *
  * @param  {string}  file
  * @param  {string}  destination

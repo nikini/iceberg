@@ -1,5 +1,4 @@
 const cmd = require('../shared/cmd');
-const now = require('../shared/now');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('../../configs/webpack-config');
@@ -7,9 +6,10 @@ const webpackConfig = require('../../configs/webpack-config');
 /**
  * Starts the webpack watch
  *
- * @param  {Object} [options={}]
+ * @param  {Object}   [options={}]
+ * @param  {function} onComplete
  */
-module.exports = (options = {}) => {
+module.exports = (options = {}, onComplete) => {
 	const config = webpackConfig(options);
 	const compiler = webpack(config);
 
@@ -21,6 +21,9 @@ module.exports = (options = {}) => {
 				chunks: true,
 				colors: true,
 			}));
+
+			if (onComplete)
+				onComplete(err);
 		});
 	else if (options.exclude.indexOf('dev-server') >= 0)
 		compiler.watch({}, (err, stats) => {
@@ -30,6 +33,9 @@ module.exports = (options = {}) => {
 				chunks: false,
 				colors: true,
 			}));
+
+			if (onComplete)
+				onComplete(err);
 		});
 	else {
 		const server = new WebpackDevServer(compiler, config.devServer);

@@ -25,6 +25,7 @@ program
 	.option('--host <hostname>', 'Hostname for the cache clear')
 	.option('--port <port>', 'Port for the cache clear')
 	.option('--dev-port <dev-port>', 'Port for the webpack-dev-server')
+	.option('--prod', 'Production environment (builds just like for production without the split)')
 	.action((options) => {
 		watch({
 			exclude: (options.exclude || '').split(','),
@@ -33,12 +34,14 @@ program
 			host: options.host,
 			port: options.port,
 			devPort: options.devPort,
+			production: options.prod,
 		});
 	})
 	.on('--help', () => {
 		console.log('  Examples:');
 		console.log();
 		console.log('    $ iceberg watch');
+		console.log('    $ iceberg watch --prod');
 		console.log('    $ iceberg watch -e jest,webpack');
 		console.log('    $ iceberg watch --exclude resources,cache,maven-compile');
 		console.log('    $ iceberg watch -s --silent');

@@ -1,12 +1,11 @@
 const Gaze = require('gaze').Gaze;
 const cmd = require('../shared/cmd');
 const livereload = require('livereload');
-const tasksLister = require('./tasks-lister');
 
 // Tasks
 const mavenCompile = require('./maven-compile');
 const cacheClear = require('./cache-clear');
-const copyFile = require('./copy-file');
+const copyFile = require('../copy/copy-file');
 const webpackWatch = require('./webpack-watch');
 const jestStart = require('../jest/jest-start');
 const getConfig = require('../shared/get-config');
@@ -17,14 +16,14 @@ const getConfig = require('../shared/get-config');
  * @param  {Object}   options
  * @param  {Function} onChange
  */
-module.exports = (options = {}, onChange) => {
+module.exports = (options = {}) => {
 	const configuration = getConfig();
 
 	// Default values
 	options.host = options.host || 'localhost';
 	options.port = options.port || 8080;
 
-	cmd.log('Starting watch');
+	cmd.log('Starting watch' + (options.production ? ' (production)' : ''));
 
 	// Variable used by livereload later, if needed
 	let livereloadServer;
@@ -54,7 +53,7 @@ module.exports = (options = {}, onChange) => {
 	}
 
 	const gaze = new Gaze(configuration.watchPaths);
-	gaze.on('ready', (watcher) => {
+	gaze.on('ready', () => {
 		cmd.log('Started watching files for changes');
 	});
 

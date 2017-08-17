@@ -39,7 +39,6 @@ module.exports = (options = {}) => {
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
-	const outputPath = path.resolve(configuration.outputPath);
 	const outputName = configuration.outputName || '[name].bundle';
 
 	const devPath = path.resolve(configuration.devPath);
@@ -57,7 +56,7 @@ module.exports = (options = {}) => {
 		new ProgressBarPlugin({
 			clear: false,
 			summary: false,
-			format: now() + ' Bundling [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
+			format: now() + ' Bundling' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
 		}),
 	];
 
@@ -137,11 +136,10 @@ module.exports = (options = {}) => {
 		plugins.push(hmrPlugin);
 		const namedModulesPlugin = new webpack.NamedModulesPlugin();
 		plugins.push(namedModulesPlugin);
+	}
 
-		// For the sagas
-		entry.unshift('babel-polyfill');
-	} else {
-		// Output extracted CSS to a file
+	// Output extracted CSS to a file
+	if (options.split) {
 		const extractPlugin = new ExtractTextPlugin({
 			filename: `${outputName}.css`,
 		});
@@ -152,19 +150,25 @@ module.exports = (options = {}) => {
 		cssLoaders.unshift(extractPluginConfig[0]);
 		scssLoaders.unshift(extractPluginConfig[0]);
 		plugins.push(extractPlugin);
-
-		// For the sagas
-		entry.unshift('babel-regenerator-runtime');
 	}
+
+	// For the sagas
+	if (options.production)
+		entry.unshift('babel-regenerator-runtime');
+	else
+		entry.unshift('babel-polyfill');
+
+	// Where to output
+	const output = {
+		path: path.resolve(configuration.outputPath),
+		filename: `${outputName}.js`,
+	};
 
 	return {
 		name: configuration.name || 'PA',
-		devtool: options.production ? undefined : 'inline-source-map',
+		devtool: options.production ? 'source-map' : 'eval-source-map',
 		entry,
-		output: {
-			path: outputPath,
-			filename: `${outputName}.js`,
-		},
+		output,
 		resolve: {
 			modules: [
 				jsPath,
