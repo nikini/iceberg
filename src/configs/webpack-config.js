@@ -229,7 +229,6 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 			hot: true,
 			inline: true,
 			compress: true,
-			overlay: true,
 			port: devServerPort,
 			proxy: devProxy,
 			publicPath: configuration.devPath,
