@@ -8,16 +8,23 @@ const each = require('lodash/each');
  *
  * @param  {Object} [options={}]
  *
- * @return {Object}x
+ * @return {Object|Array|boolean}
  */
 module.exports = (options = {}) => {
 	const result = [];
 	const configuration = getConfig();
 
 	// Multiple entries
-	each(configuration.entries, (exit, entry) => {
-		result.push(webpackConfig(options, entry, exit));
+	each(configuration.entries, (entry) => {
+		if (!options.bundle || (options.bundle && options.bundle === entry.exit))
+			result.push(webpackConfig(options, entry.entry, entry.exit));
 	});
+
+	if (result.length === 0)
+		return false;
+
+	if (result.length === 1)
+		return result[0];
 
 	return result;
 };

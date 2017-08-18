@@ -24,7 +24,7 @@ $ iceberg init
 The watch starts the webpack watch, jest watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `jest`, `livereload`, `dev-server`.
 
 ```
-$ iceberg watch
+$ iceberg watch [bundle]
 ```
 
 The options for the watch are:

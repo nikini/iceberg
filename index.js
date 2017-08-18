@@ -17,7 +17,7 @@ program
 	.version(currentPackage.version);
 
 program
-	.command('watch')
+	.command('watch [bundle]')
 	.description('Watch files, copy resources, build SASS and JS (if needed)')
 	.option('-e, --exclude <packages>', 'What to exclude (if not already excluded)')
 	.option('-s, --single', 'Run once and then exit (webpack and jest)')
@@ -26,7 +26,7 @@ program
 	.option('--port <port>', 'Port for the cache clear')
 	.option('--dev-port <dev-port>', 'Port for the webpack-dev-server')
 	.option('--prod', 'Production environment (builds just like for production without the split)')
-	.action((options) => {
+	.action((bundle, options) => {
 		watch({
 			exclude: (options.exclude || '').split(','),
 			single: Boolean(options.single),
@@ -35,6 +35,7 @@ program
 			port: options.port,
 			devPort: options.devPort,
 			production: options.prod,
+			bundle,
 		});
 	})
 	.on('--help', () => {
