@@ -153,10 +153,7 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 	}
 
 	// For the sagas
-	if (options.production)
-		entry.unshift('babel-regenerator-runtime');
-	else
-		entry.unshift('babel-polyfill');
+	entry.unshift('babel-regenerator-runtime');
 
 	// Where to output
 	const output = {
