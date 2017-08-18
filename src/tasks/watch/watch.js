@@ -6,7 +6,7 @@ const livereload = require('livereload');
 const mavenCompile = require('./maven-compile');
 const cacheClear = require('./cache-clear');
 const copyFile = require('../copy/copy-file');
-const webpackWatch = require('./webpack-watch');
+const webpackRun = require('../webpack/webpack-run');
 const jestStart = require('../jest/jest-start');
 const getConfig = require('../shared/get-config');
 
@@ -42,7 +42,7 @@ module.exports = (options = {}) => {
 
 	// Start the webpack watch
 	if (options.exclude.indexOf('webpack') < 0)
-		webpackWatch(options);
+		webpackRun(options);
 
 	// Start the jest server
 	if (options.exclude.indexOf('jest') < 0) {

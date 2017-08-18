@@ -22,10 +22,12 @@ require('babel-polyfill');
  * Function that spits out the webpack config
  *
  * @param  {Object} [options={}]
+ * @param  {string} [singleEntryPoint='']
+ * @param  {string} [singleExitPoint='']
  *
  * @return {Object}
  */
-module.exports = (options = {}) => {
+module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => {
 	const configuration = getConfig();
 
 	// Get the exclude path
@@ -35,11 +37,9 @@ module.exports = (options = {}) => {
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
-	const entry = [path.join(path.resolve(jsPath), configuration.entry)];
+	const entry = [path.join(path.resolve(jsPath), singleEntryPoint)];
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
-
-	const outputName = configuration.outputName || '[name].bundle';
 
 	const devPath = path.resolve(configuration.devPath);
 	const devServerPort = options.devPort || 9090;
@@ -56,7 +56,7 @@ module.exports = (options = {}) => {
 		new ProgressBarPlugin({
 			clear: false,
 			summary: false,
-			format: now() + ' Bundling' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
+			format: now() + ' Bundling "' + singleExitPoint + '"' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
 		}),
 	];
 
@@ -129,6 +129,7 @@ module.exports = (options = {}) => {
 	if (isPlainObject(eslintJson.globals))
 		eslintJson.globals = keys(eslintJson.globals);
 
+	// For dev server
 	if (!options.single && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
 		entry.unshift('webpack/hot/dev-server');
@@ -141,7 +142,7 @@ module.exports = (options = {}) => {
 	// Output extracted CSS to a file
 	if (options.split) {
 		const extractPlugin = new ExtractTextPlugin({
-			filename: `${outputName}.css`,
+			filename: `${singleExitPoint}.css`,
 		});
 		const extractPluginConfig = extractPlugin.extract({
 			use: 'css-loader',
@@ -161,7 +162,8 @@ module.exports = (options = {}) => {
 	// Where to output
 	const output = {
 		path: path.resolve(configuration.outputPath),
-		filename: `${outputName}.js`,
+		chunkFilename: '[name].[id].js',
+		filename: `${singleExitPoint}.js`,
 	};
 
 	return {

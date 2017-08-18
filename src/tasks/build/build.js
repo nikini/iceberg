@@ -1,5 +1,5 @@
 const cmd = require('../shared/cmd');
-const webpackWatch = require('../watch/webpack-watch');
+const webpackRun = require('../webpack/webpack-run');
 const getConfig = require('../shared/get-config');
 const copyPath = require('../copy/copy-path');
 
@@ -12,7 +12,7 @@ module.exports = (options = {}) => {
 	const configuration = getConfig();
 
 	// Builds
-	webpackWatch({
+	webpackRun({
 		single: true,
 		production: true,
 		split: true,

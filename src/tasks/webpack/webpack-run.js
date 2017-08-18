@@ -1,7 +1,8 @@
 const cmd = require('../shared/cmd');
+const head = require('lodash/head');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const webpackConfig = require('../../configs/webpack-config');
+const getWebpackConfig = require('./get-webpack-config');
 
 /**
  * Starts the webpack watch
@@ -10,8 +11,9 @@ const webpackConfig = require('../../configs/webpack-config');
  * @param  {function} onComplete
  */
 module.exports = (options = {}, onComplete) => {
-	const config = webpackConfig(options);
+	const config = getWebpackConfig(options);
 	const compiler = webpack(config);
+	const firstConfig = head(config);
 
 	if (options.single)
 		compiler.run((err, stats) => {
@@ -38,9 +40,9 @@ module.exports = (options = {}, onComplete) => {
 				onComplete(err);
 		});
 	else {
-		const server = new WebpackDevServer(compiler, config.devServer);
-		server.listen(config.devServer.port, 'localhost', () => {
-			cmd.log(`Starting dev server on http://localhost:${config.devServer.port}`);
+		const server = new WebpackDevServer(compiler, firstConfig.devServer);
+		server.listen(firstConfig.devServer.port, 'localhost', () => {
+			cmd.log(`Starting dev server on http://localhost:${firstConfig.devServer.port}`);
 		});
 	}
 };

@@ -22,9 +22,10 @@
 			"lines": 95,
 			"statements": 90
 		},
-		"entry": "<%= entry %>",
+		"entries": {
+			"<%= entry %>": "[name].bundle"
+		},
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
-		"outputName": "[name].bundle",
 		"devPath": "src/main/plugins/<%= plugin %>/ui.html/bundles/dev"
 	}
 }

@@ -3,7 +3,7 @@ const cmd = require('../shared/cmd');
 // Tasks
 const mavenCompile = require('../watch/maven-compile');
 const cacheClear = require('../watch/cache-clear');
-const webpackWatch = require('../watch/webpack-watch');
+const webpackRun = require('../webpack/webpack-run');
 const jestStart = require('../jest/jest-start');
 const flowCheck = require('../watch/flow-check');
 const runEslint = require('./run-eslint');
@@ -25,7 +25,7 @@ module.exports = (options = {}) => {
 
 	switch (options.package) {
 	case 'webpack':
-		webpackWatch({
+		webpackRun({
 			single: true,
 		});
 		break;
