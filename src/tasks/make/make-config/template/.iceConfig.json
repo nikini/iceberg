@@ -27,6 +27,6 @@
 			"exit": "[name].bundle"
 		}],
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
-		"devPath": "src/main/plugins/<%= plugin %>/ui.html/bundles/dev"
+		"devPath": "/scripts/bundles/"
 	}
 }

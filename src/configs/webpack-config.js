@@ -41,7 +41,6 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
-	const devPath = path.resolve(configuration.devPath);
 	const devServerPort = options.devPort || 9090;
 
 	const devProxy = configuration.devProxy || {};
@@ -230,15 +229,15 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 			hot: true,
 			inline: true,
 			compress: true,
+			overlay: true,
 			port: devServerPort,
-			contentBase: devPath,
 			proxy: devProxy,
+			publicPath: configuration.devPath,
 			stats: {
 				assets: false,
 				chunks: false,
 				chunkModules: false,
 				modules: false,
-				children: false,
 				colors: true,
 			},
 		},
