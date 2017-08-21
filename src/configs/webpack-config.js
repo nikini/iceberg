@@ -160,6 +160,7 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 		path: path.resolve(configuration.outputPath),
 		chunkFilename: '[name].[id].js',
 		filename: `${singleExitPoint}.js`,
+		publicPath: configuration.devPath,
 	};
 
 	return {
@@ -228,7 +229,6 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 			compress: true,
 			port: devServerPort,
 			proxy: devProxy,
-			publicPath: configuration.devPath,
 			stats: {
 				assets: false,
 				chunks: false,
