@@ -23,6 +23,7 @@
 			"statements": 90
 		},
 		"entries": [{
+			"name": "Main",
 			"entry": "<%= entry %>",
 			"exit": "[name].bundle"
 		}],

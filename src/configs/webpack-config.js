@@ -22,12 +22,11 @@ require('babel-polyfill');
  * Function that spits out the webpack config
  *
  * @param  {Object} [options={}]
- * @param  {string} [singleEntryPoint='']
- * @param  {string} [singleExitPoint='']
+ * @param  {string} [singleOptions={}]
  *
  * @return {Object}
  */
-module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => {
+module.exports = (options = {}, singleOptions = {}) => {
 	const configuration = getConfig();
 
 	// Get the exclude path
@@ -37,7 +36,7 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
-	const entry = [path.join(path.resolve(jsPath), singleEntryPoint)];
+	const entry = [path.join(path.resolve(jsPath), singleOptions.entry)];
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
@@ -55,7 +54,7 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 		new ProgressBarPlugin({
 			clear: false,
 			summary: false,
-			format: now() + ' Bundling "' + singleExitPoint + '"' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
+			format: now() + ' Bundling "' + singleOptions.exit + '"' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
 		}),
 	];
 
@@ -141,7 +140,7 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 	// Output extracted CSS to a file
 	if (options.split) {
 		const extractPlugin = new ExtractTextPlugin({
-			filename: `${singleExitPoint}.css`,
+			filename: `${singleOptions.exit}.css`,
 		});
 		const extractPluginConfig = extractPlugin.extract({
 			use: 'css-loader',
@@ -159,12 +158,12 @@ module.exports = (options = {}, singleEntryPoint = '', singleExitPoint = '') => 
 	const output = {
 		path: path.resolve(configuration.outputPath),
 		chunkFilename: '[name].[id].js',
-		filename: `${singleExitPoint}.js`,
+		filename: `${singleOptions.exit}.js`,
 		publicPath: configuration.devPath,
 	};
 
 	return {
-		name: configuration.name || 'PA',
+		name: `${configuration.name} - ${singleOptions.name}`,
 		devtool: options.production ? 'source-map' : 'eval-source-map',
 		entry,
 		output,

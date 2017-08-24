@@ -17,7 +17,7 @@ module.exports = (options = {}) => {
 	// Multiple entries
 	each(configuration.entries, (entry) => {
 		if (!options.bundle || (options.bundle && options.bundle === entry.exit))
-			result.push(webpackConfig(options, entry.entry, entry.exit));
+			result.push(webpackConfig(options, entry));
 	});
 
 	if (result.length === 0)
