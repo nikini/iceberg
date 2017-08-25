@@ -1,6 +1,6 @@
 const path = require('path');
-const shell = require('shelljs');
 const cmd = require('../shared/cmd');
+const json = require('./json');
 
 /**
  * Package config related methods
@@ -22,12 +22,14 @@ module.exports = {
 	 */
 	get() {
 		const packageJsonPath = this.getLocation();
-		const packageJson = shell.cat(packageJsonPath);
-		if (!packageJson.toString()) {
+		let packageJson = {};
+		try {
+			packageJson = json.get(packageJsonPath);
+		} catch (e) {
 			cmd.error('Could not find "package.json" in current folder. Please run `npm init` first');
 			throw new Error('Not an npm project');
 		}
-		return JSON.parse(packageJson.toString());
+		return packageJson;
 	},
 
 	/**
@@ -37,7 +39,6 @@ module.exports = {
 	 */
 	set(config) {
 		const packageJsonPath = this.getLocation();
-		const fileContents = shell.ShellString(JSON.stringify(config, null, 2));
-		fileContents.to(packageJsonPath);
+		json.set(packageJsonPath, config);
 	},
 };

@@ -10,13 +10,17 @@ const copyPath = require('../copy/copy-path');
  */
 module.exports = (options = {}) => {
 	const configuration = getConfig();
-
-	// Builds
-	webpackRun({
+	const runOptions = {
 		single: true,
 		production: true,
 		split: true,
-	}, (error) => {
+	};
+
+	if (options.bundle)
+		runOptions.bundle = options.bundle;
+
+	// Builds
+	webpackRun(runOptions, (error) => {
 		if (!error)
 			// Copy to target
 			copyPath(configuration.outputPath, configuration.targetPath, configuration.copyPath, options.silent, () => {

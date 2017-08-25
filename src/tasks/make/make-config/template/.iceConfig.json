@@ -28,6 +28,10 @@
 			"exit": "[name].bundle"
 		}],
 		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
-		"devPath": "/scripts/bundles/"
+		"devPath": "/scripts/bundles/",
+		"translations": {
+			"regexp": "",
+			"file": ""
+		}
 	}
 }

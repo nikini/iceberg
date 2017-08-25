@@ -100,10 +100,12 @@ program
 	});
 
 program
-	.command('build')
+	.command('build [bundle]')
 	.description('Builds the JS for production')
-	.action(() => {
-		build();
+	.action((bundle) => {
+		build({
+			bundle,
+		});
 	});
 
 program

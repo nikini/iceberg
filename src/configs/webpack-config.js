@@ -4,19 +4,18 @@ const precss = require('precss');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const colors = require('colors');
 const each = require('lodash/each');
 const isPlainObject = require('lodash/isPlainObject');
 const keys = require('lodash/keys');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+
 const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
-
-require('babel-polyfill');
 
 /**
  * Function that spits out the webpack config
@@ -178,6 +177,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 		resolveLoader: {
 			alias: {
 				'custom-sass-lint-loader': path.join(__dirname, '../loaders/sass-lint-loader'),
+				'custom-translations-loader': path.join(__dirname, '../loaders/translations-loader'),
 			},
 		},
 
@@ -187,6 +187,15 @@ module.exports = (options = {}, singleOptions = {}) => {
 				test: /(\.json)$/,
 				exclude: excludePath,
 				loader: 'json-loader',
+			}, {
+				enforce: 'pre',
+				test: /(\.js|\.jsx)$/,
+				exclude: excludePath,
+				loader: 'custom-translations-loader',
+				options: {
+					regexp: configuration.translations.regexp,
+					file: path.join(jsPath, configuration.translations.file),
+				},
 			}, {
 				enforce: 'pre',
 				test: /(\.js|\.jsx)$/,

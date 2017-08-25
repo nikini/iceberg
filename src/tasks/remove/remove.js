@@ -4,7 +4,6 @@ const inquirer = require('inquirer');
 const cmd = require('../shared/cmd');
 const exec = require('child_process').exec;
 const packageConfig = require('../shared/package-config');
-const currentPackage = require('../../../package.json');
 
 /**
  * Removes iceberg from the current project
@@ -31,7 +30,7 @@ module.exports = () => {
 
 	cmd.log('Running npm prune now');
 
-	const child = exec('npm prune', (error, stdout, stderr) => {
+	exec('npm prune', (error, stdout) => {
 		if (error) {
 			cmd.error(`Error: ${error}`);
 			return;
