@@ -16,8 +16,10 @@ module.exports = function translationsLoader(content) {
 	let result = regex.exec(content);
 
 	while (result) {
-		if (this.query.file && result && result[1])
-			json.setVariable(this.query.file, false, result[1]);
+		if (this.query.file && result && result[1]) {
+			const str = result[1].replace(/\\\\/g, '\\').replace(/\\n/g, '\n');
+			json.setVariable(this.query.file, false, str);
+		}
 		result = regex.exec(content);
 	}
 
