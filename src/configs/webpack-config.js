@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const precss = require('precss');
 const webpack = require('webpack');
+const shell = require('shelljs');
 const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
 const colors = require('colors');
@@ -161,6 +162,11 @@ module.exports = (options = {}, singleOptions = {}) => {
 		publicPath: configuration.devPath,
 	};
 
+	const translationsFile = path.join(jsPath, configuration.translations.file);
+	// If file does not exist, create it
+	if (!shell.test('-e', translationsFile))
+		shell.ShellString('[]').to(translationsFile);
+
 	return {
 		name: `${configuration.name} - ${singleOptions.name}`,
 		devtool: options.production ? 'source-map' : 'eval-source-map',
@@ -194,7 +200,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				loader: 'custom-translations-loader',
 				options: {
 					regexp: configuration.translations.regexp,
-					file: path.join(jsPath, configuration.translations.file),
+					file: translationsFile,
 				},
 			}, {
 				enforce: 'pre',
