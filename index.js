@@ -4,6 +4,7 @@ const watch = require('./src/tasks/watch/watch');
 const run = require('./src/tasks/run/run');
 const make = require('./src/tasks/make/make');
 const build = require('./src/tasks/build/build');
+const generateTranslations = require('./src/tasks/generate-translations/generate-translations');
 const init = require('./src/tasks/init/init');
 const remove = require('./src/tasks/remove/remove');
 const currentPackage = require('./package.json');
@@ -104,6 +105,15 @@ program
 	.description('Builds the JS for production')
 	.action((bundle) => {
 		build({
+			bundle,
+		});
+	});
+
+program
+	.command('i18n')
+	.description('Generates the i18n file')
+	.action((bundle) => {
+		generateTranslations({
 			bundle,
 		});
 	});

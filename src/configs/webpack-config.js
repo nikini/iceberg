@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const precss = require('precss');
 const webpack = require('webpack');
-const shell = require('shelljs');
 const autoprefixer = require('autoprefixer');
 const jsonImporter = require('node-sass-json-importer');
 const colors = require('colors');
@@ -50,11 +49,13 @@ module.exports = (options = {}, singleOptions = {}) => {
 		devProxy[key] = newValue;
 	});
 
+	const bundleAction = options.bundleAction || 'Bundling';
+
 	let plugins = [
 		new ProgressBarPlugin({
 			clear: false,
 			summary: false,
-			format: now() + ' Bundling "' + singleOptions.exit + '"' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
+			format: now() + ' ' + bundleAction + ' "' + singleOptions.exit + '"' + (options.production ? ' (production)' : '') + ' [:bar] ' + colors.green(':percent') + ' (:elapsed seconds)',
 		}),
 	];
 
@@ -162,11 +163,6 @@ module.exports = (options = {}, singleOptions = {}) => {
 		publicPath: configuration.devPath,
 	};
 
-	const translationsFile = path.join(jsPath, configuration.translations.file);
-	// If file does not exist, create it
-	if (!shell.test('-e', translationsFile))
-		shell.ShellString('[]').to(translationsFile);
-
 	return {
 		name: `${configuration.name} - ${singleOptions.name}`,
 		devtool: options.production ? 'source-map' : 'eval-source-map',
@@ -182,8 +178,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 		},
 		resolveLoader: {
 			alias: {
-				'custom-sass-lint-loader': path.join(__dirname, '../loaders/sass-lint-loader'),
-				'custom-translations-loader': path.join(__dirname, '../loaders/translations-loader'),
+				'custom-sass-lint-loader': path.join(__dirname, '../webpack-loaders/sass-lint-loader'),
 			},
 		},
 
@@ -193,15 +188,6 @@ module.exports = (options = {}, singleOptions = {}) => {
 				test: /(\.json)$/,
 				exclude: excludePath,
 				loader: 'json-loader',
-			}, {
-				enforce: 'pre',
-				test: /(\.js|\.jsx)$/,
-				exclude: excludePath,
-				loader: 'custom-translations-loader',
-				options: {
-					regexp: configuration.translations.regexp,
-					file: translationsFile,
-				},
 			}, {
 				enforce: 'pre',
 				test: /(\.js|\.jsx)$/,
