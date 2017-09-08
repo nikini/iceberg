@@ -13,6 +13,10 @@ module.exports = (options = {}) => {
 		['transform-react-display-name'],
 		['transform-function-bind'],
 		['transform-decorators-legacy'],
+		['transform-runtime', {
+			polyfill: true,
+			regenerator: true,
+		}],
 		transformClassPropertiesPlugin,
 	];
 
@@ -50,7 +54,7 @@ module.exports = (options = {}) => {
 					['transform-function-bind'],
 					['transform-decorators-legacy'],
 					['transform-runtime', {
-						polyfill: false,
+						polyfill: true,
 						regenerator: true,
 					}],
 					transformClassPropertiesPlugin,
