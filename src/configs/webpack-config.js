@@ -11,6 +11,7 @@ const keys = require('lodash/keys');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const VisualizerPlugin = require('webpack-visualizer-plugin');
 
 const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
@@ -94,25 +95,40 @@ module.exports = (options = {}, singleOptions = {}) => {
 		},
 	}]);
 
-	if (options.production)
+	if (options.production) {
+		process.env.NODE_ENV = 'production';
+		process.env.BABEL_ENV = 'production';
+
 		plugins = plugins.concat([
 			new webpack.DefinePlugin({
-				'process.env': {
-					NODE_ENV: JSON.stringify('production'),
-				},
+				'process.env.NODE_ENV': JSON.stringify('production'),
+				'process.env.BABEL_ENV': JSON.stringify('production'),
 				ENVIRONMENT: JSON.stringify('production'),
+				PRODUCTION: JSON.stringify(true),
 			}),
+			new webpack.optimize.AggressiveMergingPlugin(),
+			new webpack.optimize.OccurrenceOrderPlugin(),
 			new webpack.LoaderOptionsPlugin({
 				minimize: true,
 			}),
 			new webpack.optimize.UglifyJsPlugin({
-				mangle: false,
-				compress: {
-					warnings: false,
+				parallel: true,
+				sourceMap: false,
+				uglifyOptions: {
+					ie8: false,
+					compress: {
+						warnings: true,
+						comparisons: false,
+					},
+					output: {
+						comments: false,
+						ascii_only: true,
+					},
+					ecma: 5,
 				},
 			}),
 		]);
-	else
+	} else
 		plugins.push(new webpack.DefinePlugin({
 			ENVIRONMENT: JSON.stringify('development'),
 		}));
@@ -129,7 +145,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 		eslintJson.globals = keys(eslintJson.globals);
 
 	// For dev server
-	if (!options.single && options.exclude.indexOf('dev-server') < 0) {
+	if (!options.single && !options.production && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
 		entry.unshift('webpack/hot/dev-server');
 		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
@@ -155,6 +171,14 @@ module.exports = (options = {}, singleOptions = {}) => {
 	// For the sagas
 	entry.unshift('babel-regenerator-runtime');
 
+	// To ignore locales for moment js
+	plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/));
+
+	// To get the filesize data
+	plugins.push(new VisualizerPlugin({
+		filename: './stats-' + (options.production ? 'prod' : 'dev') + '.html',
+	}));
+
 	// Where to output
 	const output = {
 		path: path.resolve(configuration.outputPath),
@@ -163,7 +187,9 @@ module.exports = (options = {}, singleOptions = {}) => {
 		publicPath: configuration.devPath,
 	};
 
-	return {
+	const babelOptions = babelConfig(options);
+
+	const webpackConfig = {
 		name: `${configuration.name} - ${singleOptions.name}`,
 		devtool: options.production ? 'source-map' : 'eval-source-map',
 		entry,
@@ -183,6 +209,8 @@ module.exports = (options = {}, singleOptions = {}) => {
 		},
 
 		module: {
+			strictExportPresence: true,
+			wrappedContextRecursive: false,
 			rules: [{
 				enforce: 'pre',
 				test: /(\.json)$/,
@@ -199,7 +227,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				exclude: excludePath,
 				use: {
 					loader: 'babel-loader',
-					options: babelConfig(options),
+					options: babelOptions,
 				},
 			}, {
 				test: /\.scss$/,
@@ -223,6 +251,16 @@ module.exports = (options = {}, singleOptions = {}) => {
 
 		plugins,
 
+		// Some libraries import Node modules but don't use them in the browser.
+		// Tell Webpack to provide empty mocks for them so importing them works.
+		node: {
+			dgram: 'empty',
+			fs: 'empty',
+			net: 'empty',
+			tls: 'empty',
+			child_process: 'empty',
+		},
+
 		devServer: {
 			hot: true,
 			inline: true,
@@ -237,12 +275,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				colors: true,
 			},
 		},
-
-		externals: {
-			cheerio: 'window',
-			'react/addons': 'react',
-			'react/lib/ExecutionEnvironment': 'react',
-			'react/lib/ReactContext': 'react',
-		},
 	};
+
+	return webpackConfig;
 };

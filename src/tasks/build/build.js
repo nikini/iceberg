@@ -17,19 +17,24 @@ module.exports = (options = {}) => {
 		split: true,
 	};
 
-	if (options.bundle)
+	const inTheEnd = (error) => {
+		if (!error)
+			// Copy to target
+			copyPath(configuration.outputPath, configuration.targetPath, configuration.copyPath, options.silent, () => {
+				// Log output
+				cmd.success('Succesfully built the bundle');
+			});
+	};
+
+	if (options.bundle) {
 		runOptions.bundle = options.bundle;
 
-	// Get the translations first
-	generateTranslations(options, () => {
-		// Builds
-		webpackRun(runOptions, (error) => {
-			if (!error)
-				// Copy to target
-				copyPath(configuration.outputPath, configuration.targetPath, configuration.copyPath, options.silent, () => {
-					// Log output
-					cmd.success('Succesfully built the bundle');
-				});
+		// Build the bundle only (if a bundle is specified)
+		webpackRun(runOptions, inTheEnd);
+	} else
+		// Get the translations first
+		generateTranslations(options, () => {
+			// Build the bundle
+			webpackRun(runOptions, inTheEnd);
 		});
-	});
 };
