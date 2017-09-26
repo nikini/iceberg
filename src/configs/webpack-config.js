@@ -201,6 +201,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				nodeModulesPath,
 			],
 			extensions: ['.js', '.jsx'],
+			alias: configuration.alias,
 		},
 		resolveLoader: {
 			alias: {

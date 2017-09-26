@@ -32,6 +32,7 @@
 		"translations": {
 			"regexp": "",
 			"file": ""
-		}
+		},
+		"alias": {}
 	}
 }
