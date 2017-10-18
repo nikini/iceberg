@@ -4,6 +4,9 @@
 		"class-property",
 		"react"
 	],
+	"overrides": [{
+		"excludedFiles": "*.bundle.js"
+	}],
 	"extends": "airbnb",
 	"rules": {
 		"max-len": "off",

@@ -17,6 +17,9 @@ module.exports = (options = {}) => {
 		baseConfig: eslintJson,
 		useEslintrc: false,
 		fix: options.fix,
+		ignorePattern: [
+			'*.bundle.js',
+		],
 	};
 	const cli = new CLIEngine(eslintConfig);
 	const formatter = cli.getFormatter();
