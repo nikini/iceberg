@@ -45,7 +45,7 @@ program
 		console.log('    $ iceberg watch');
 		console.log('    $ iceberg watch --prod');
 		console.log('    $ iceberg watch -e jest,webpack');
-		console.log('    $ iceberg watch --exclude resources,cache,maven-compile');
+		console.log('    $ iceberg watch --exclude resources,jest');
 		console.log('    $ iceberg watch -s --silent');
 		console.log('    $ iceberg watch -e jest --dev-port 9091');
 		console.log();
@@ -74,7 +74,6 @@ program
 		console.log();
 		console.log('    $ iceberg run jest --silent');
 		console.log('    $ iceberg run webpack');
-		console.log('    $ iceberg run cache --host localhost --port 8080');
 		console.log('    $ iceberg run eslint --fix');
 		console.log();
 		console.log('  For package you can use: ' + runTasks);

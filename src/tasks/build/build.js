@@ -3,6 +3,7 @@ const webpackRun = require('../webpack/webpack-run');
 const getConfig = require('../shared/get-config');
 const copyPath = require('../copy/copy-path');
 const generateTranslations = require('../generate-translations/generate-translations');
+const getPlugins = require('../../plugins/get-plugins');
 
 /**
  * Builds the final file (for production)
@@ -17,13 +18,20 @@ module.exports = (options = {}) => {
 		split: true,
 	};
 
+	// Let's get all the plugins
+	const plugins = getPlugins();
+
 	const inTheEnd = (error) => {
+		const message = 'Succesfully built the bundle';
 		if (!error)
-			// Copy to target
-			copyPath(configuration.outputPath, configuration.targetPath, configuration.copyPath, options.silent, () => {
-				// Log output
-				cmd.success('Succesfully built the bundle');
-			});
+			if ((!options.exclude || options.exclude.indexOf('copy') < 0) && plugins.copy)
+				// Copy to target
+				copyPath(configuration.outputPath, plugins.copy.config.destination, plugins.copy.config.source, options.silent, () => {
+					// Log output
+					cmd.success(message);
+				});
+			else
+				cmd.success(message);
 	};
 
 	if (options.bundle) {

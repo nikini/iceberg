@@ -1,4 +1,6 @@
-const transformClassPropertiesPlugin = require('babel-plugin-transform-class-properties');
+const browserSupport = require('./browser-support');
+const path = require('path');
+const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
 /**
  * Function that spits out the babel config
@@ -8,61 +10,36 @@ const transformClassPropertiesPlugin = require('babel-plugin-transform-class-pro
  * @return {Object}
  */
 module.exports = (options = {}) => {
-	const developmentPlugins = [
-		['transform-object-rest-spread'],
-		['transform-react-display-name'],
-		['transform-function-bind'],
-		['transform-decorators-legacy'],
-		['transform-runtime', {
+	const plugins = [
+		[`${packageNodeModulesPath}/babel-plugin-transform-object-rest-spread`],
+		[`${packageNodeModulesPath}/babel-plugin-transform-react-display-name`],
+		[`${packageNodeModulesPath}/babel-plugin-transform-function-bind`],
+		[`${packageNodeModulesPath}/babel-plugin-transform-decorators-legacy`],
+		[`${packageNodeModulesPath}/babel-plugin-transform-runtime`, {
 			polyfill: true,
 			regenerator: true,
 		}],
-		transformClassPropertiesPlugin,
+		[`${packageNodeModulesPath}/babel-plugin-transform-class-properties`],
 	];
 
-	if (!options.single)
-		developmentPlugins.push(['react-transform', {
-			transforms: [{
-				transform: 'react-transform-hmr',
-				imports: ['react'],
-				locals: ['module'],
-			}, {
-				transform: 'react-transform-catch-errors',
-				imports: ['react', 'redbox-react'],
-			}],
-		}]);
+	if (!options.production && !options.test)
+		plugins.push([`${packageNodeModulesPath}/react-hot-loader/babel`]);
+
+	// if (options.test)
+	// 	plugins.push([`babel-plugin-transform-es2015-modules-commonjs`]);
 
 	return {
 		cacheDirectory: true,
 		babelrc: false,
+		compact: true,
 		presets: [
-			'react', ['env', {
+			`${packageNodeModulesPath}/babel-preset-react`, [`${packageNodeModulesPath}/babel-preset-env`, {
 				targets: {
-					browsers: ['> 1%', 'last 2 versions'],
+					browsers: browserSupport,
 				},
 			}],
 		],
 		comments: false,
-		env: {
-			development: {
-				plugins: developmentPlugins,
-			},
-			production: {
-				plugins: [
-					['transform-object-rest-spread'],
-					['transform-react-display-name'],
-					['transform-function-bind'],
-					['transform-decorators-legacy'],
-					['transform-runtime', {
-						polyfill: true,
-						regenerator: true,
-					}],
-					transformClassPropertiesPlugin,
-				],
-			},
-			test: {
-				plugins: ['transform-es2015-modules-commonjs'],
-			},
-		},
+		plugins,
 	};
 };

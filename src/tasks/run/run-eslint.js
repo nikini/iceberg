@@ -29,12 +29,11 @@ module.exports = (options = {}) => {
 
 	if (report.errorCount > 0)
 		process.exit(1);
-	else
-		if (report.warningCount > 0)
-			if (report.warningCount > 1)
-				cmd.warn(`There are ${report.warningCount} warnings`);
-			else
-				cmd.warn(`There is still ${report.warningCount} warning left`);
+	else if (report.warningCount > 0)
+		if (report.warningCount > 1)
+			cmd.warn(`There are ${report.warningCount} warnings`);
 		else
-			cmd.log('Linting has been succesfull! All is good :)');
+			cmd.warn(`There is still ${report.warningCount} warning left`);
+	else
+		cmd.log('Linting has been succesfull! All is good :)');
 };

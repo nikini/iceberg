@@ -1,4 +1,4 @@
-const Gaze = require('gaze').Gaze;
+const { Gaze } = require('gaze');
 const cmd = require('../shared/cmd');
 const jest = require('jest-cli');
 const path = require('path');
@@ -27,18 +27,26 @@ module.exports = (options = {}) => {
 				path.resolve(__dirname, '../../../node_modules'),
 				modulePath,
 			],
+			moduleFileExtensions: [
+				'js',
+				'jsx',
+			],
 			watch: false,
 			verbose: true,
 			collectCoverage: true,
-			collectCoverageFrom: options.hideFullCoverage ? false : configuration.coverageCollection,
+			collectCoverageFrom: options.hideFullCoverage ? false : configuration.tests.coverageCollection,
+			setupFiles: [
+				path.resolve(__dirname, 'jest-shim'),
+				path.resolve(__dirname, 'jest-setup'),
+			],
 			transform: {
-				'^.+\\.(js|jsx)': path.resolve(__dirname, 'jest-transform.js'),
+				'^.+\\.(js|jsx)?$': path.resolve(__dirname, 'jest-transform.js'),
 			},
 			moduleNameMapper: {
 				'\\.(css|scss)$': 'identity-obj-proxy',
 			},
 			coverageThreshold: {
-				global: configuration.minimumCoverage,
+				global: configuration.tests.minimumCoverage,
 			},
 			coverageReporters: ['text'],
 		},
@@ -49,9 +57,9 @@ module.exports = (options = {}) => {
 
 	jest.runCLI(jestOptions, [jestOptions.config.rootDir]);
 
-	if (configuration.testWatchPaths && configuration.testWatchPaths.length && !options.single) {
-		const gaze = new Gaze(configuration.testWatchPaths);
-		gaze.on('ready', (watcher) => {
+	if (configuration.tests.watchPaths && configuration.tests.watchPaths.length && !options.single) {
+		const gaze = new Gaze(configuration.tests.watchPaths);
+		gaze.on('ready', () => {
 			cmd.log('Started watching test files for changes');
 		});
 

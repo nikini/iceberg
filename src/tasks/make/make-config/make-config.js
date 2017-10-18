@@ -17,23 +17,6 @@ module.exports = (name = '') => {
 		name,
 	};
 
-	const validDirectoryPath = (...args) => {
-		const pathToCheck = path.join.apply(path, args);
-		if (!shell.test('-e', pathToCheck))
-			return 'Path does not exist';
-		if (!shell.test('-d', pathToCheck))
-			return 'Path must be a folder';
-		return true;
-	};
-	const validFilePath = (...args) => {
-		const pathToCheck = path.join.apply(path, args);
-		if (!shell.test('-e', pathToCheck))
-			return 'Path does not exist';
-		if (!shell.test('-f', pathToCheck))
-			return 'Path must be a file';
-		return true;
-	};
-
 	const prompt = inquirer.createPromptModule();
 	prompt(getQuestions(name)).then((answers) => {
 		// Transform the answers into options

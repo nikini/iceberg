@@ -1,38 +1,43 @@
 {
 	"v2": {
 		"name": "<%= name %>",
-		"sassPath": "src/main/plugins/<%= plugin %>/ui.html/sources/scss",
-		"modulePath": "src/main/plugins/<%= plugin %>/ui.html/sources/js",
-		"copyPath": "src/main/plugins/<%= plugin %>",
-		"targetPath": "target/classes/GLIDE-INF/plugins/<%= plugin %>",
+		"sassPath": "src/scss",
+		"modulePath": "src/js",
 		"watchPaths": [
-			"src/main/plugins/<%= plugin %>/**/*",
-			"src/main/java/**/*.java",
-			"!src/main/plugins/<%= plugin %>/update/**/*",
-			"!src/main/plugins/<%= plugin %>/upload/**/*",
-			"!src/main/plugins/<%= plugin %>/apply_once/**/*"
+			"src/**/*",
 		],
-		"testWatchPaths": [
-			"src/main/plugins/<%= plugin %>/ui.html/sources/js/**/*"
-		],
-		"coverageCollection": [],
-		"minimumCoverage": {
-			"branches": 90,
-			"functions": 100,
-			"lines": 95,
-			"statements": 90
-		},
+		"excludePath": [],
+		"noopPaths": [],
 		"entries": [{
 			"name": "Main",
 			"entry": "<%= entry %>",
 			"exit": "[name].bundle"
 		}],
-		"outputPath": "src/main/plugins/<%= plugin %>/ui.html/bundles",
-		"devPath": "/scripts/bundles/",
+		"outputPath": "bundles",
+		"dev": {
+			"path": "bundles",
+			"proxy": {}
+		},
+		"alias": {},
+		"tests": {
+			"watchPaths": [
+				"src/**/*"
+			],
+			"coverageCollection": [],
+			"minimumCoverage": {
+				"branches": 90,
+				"functions": 100,
+				"lines": 95,
+				"statements": 90
+			}
+		},
 		"translations": {
 			"regexp": "",
 			"file": ""
 		},
-		"alias": {}
+		"plugins": {},
+		"make": {
+			"prefix": ""
+		}
 	}
 }

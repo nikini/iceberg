@@ -1,5 +1,4 @@
 const cmd = require('../shared/cmd');
-const program = require('commander');
 const makeComponent = require('./make-component/make-component');
 const makeOther = require('./make-other/make-other');
 const makeConfig = require('./make-config/make-config');

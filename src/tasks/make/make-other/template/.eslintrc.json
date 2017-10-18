@@ -10,8 +10,8 @@
 		"no-tabs": "off",
 		"vars-on-top": "off",
 		"curly": [
-		  "error",
-		  "multi"
+			"error",
+			"multi"
 		],
 		"comma-dangle": ["error", {
 			"arrays": "always-multiline",
@@ -35,20 +35,20 @@
 		"no-underscore-dangle": "off",
 		"object-shorthand": "off",
 		"func-names": [
-		  "warn",
-		  "always"
+			"warn",
+			"always"
 		],
 		"quotes": [
-		  "warn",
-		  "single"
+			"warn",
+			"single"
 		],
 		"indent": [
-		  "error",
-		  "tab"
+			"error",
+			"tab"
 		],
 		"no-restricted-syntax": [
-		  "error",
-		  "WithStatement"
+			"error",
+			"WithStatement"
 		],
 		"no-prototype-builtins": "off",
 		"block-scoped-var": "off",
@@ -63,8 +63,8 @@
 		"import/imports-first": "off",
 		"import/extensions": "off",
 		"no-unresolved": "off",
-    	"react/jsx-indent": [ "warn", "tab" ],
-    	"react/jsx-indent-props": [ "warn", "tab" ],
+		"react/jsx-indent": [ "warn", "tab" ],
+		"react/jsx-indent-props": [ "warn", "tab" ],
 		"react/prefer-stateless-function": "off",
 		"react/no-unused-prop-types": "off",
 		"react/prop-types": "off",

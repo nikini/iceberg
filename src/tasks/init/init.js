@@ -1,5 +1,3 @@
-const path = require('path');
-const shell = require('shelljs');
 const inquirer = require('inquirer');
 const cmd = require('../shared/cmd');
 const make = require('../make/make');
@@ -32,7 +30,7 @@ module.exports = () => {
 
 	cmd.log('Running npm install now');
 
-	const child = exec('npm install', (error, stdout, stderr) => {
+	exec('npm install', (error, stdout) => {
 		if (error) {
 			cmd.error(`Error: ${error}`);
 			return;

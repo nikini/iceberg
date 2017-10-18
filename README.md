@@ -21,7 +21,7 @@ $ iceberg init
 
 ## Watch
 
-The watch starts the webpack watch, jest watch and the resources copy. You can choose to exclude: `cache`, `maven-compile`, `resources`, `webpack`, `jest`, `livereload`, `dev-server`.
+The watch starts the webpack watch, jest watch and the resources copy. You can choose to exclude: `resources`, `webpack`, `jest`, `dev-server`.
 
 ```
 $ iceberg watch [bundle]
@@ -35,7 +35,7 @@ The options for the watch are:
  -s,  --single              run once and then exit (webpack and jest)
  --silent                   this flag will hide OS notifications
  --host <hostname>          hostname for the cache clear
- --port <port>              port for the cache clea
+ --port <port>              port for the cache clear
  --dev-port <dev-port>      port for the webpack-dev-server
  --prod                     production environment (builds just like for production without the split)
 ```
@@ -44,14 +44,14 @@ The options for the watch are:
 
 ```
 $ iceberg watch --e jest,webpack
-$ iceberg watch --exclude resources,cache,maven-compile
+$ iceberg watch --exclude resources,jest
 $ iceberg watch -s --silent
 $ iceberg watch --prod
 ```
 
 ## Run
 
-The run command starts a task, like: `cache`, `maven-compile`, `webpack`, `jest`, `flow-check`, `eslint`.
+The run command starts a task, like: `webpack`, `jest`, `eslint`.
 
 ```
 $ iceberg run <package>
@@ -72,7 +72,6 @@ The options for the run are:
 ```
 $ iceberg run jest --silent
 $ iceberg run webpack
-$ iceberg run cache --host localhost --port 8081
 $ iceberg run eslint --fix
 ```
 

@@ -6,6 +6,8 @@ const trim = require('underscore.string/trim');
 const classify = require('underscore.string/classify');
 const last = require('lodash/last');
 
+const getConfig = require('../../../shared/get-config');
+
 /**
  * Function that spits out all the information about the file
  *
@@ -24,7 +26,10 @@ module.exports = (name) => {
 	const className = classify(dashName);
 	const dirName = dashName;
 
-	const cssClassName = (startsWith(dashName, 'pa-') ? '' : 'pa-') + dashName;
+	const configuration = getConfig();
+	const prefix = configuration.make.prefix;
+
+	const cssClassName = (startsWith(dashName, prefix) ? '' : prefix) + dashName;
 
 	return {
 		dashName,

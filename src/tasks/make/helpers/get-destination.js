@@ -1,4 +1,3 @@
-const last = require('lodash/last');
 const path = require('path');
 const getConfig = require('../../shared/get-config');
 

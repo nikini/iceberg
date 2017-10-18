@@ -17,6 +17,8 @@ const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
 const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
+const browserSupport = require('./browser-support');
+const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
 /**
  * Function that spits out the webpack config
@@ -31,18 +33,21 @@ module.exports = (options = {}, singleOptions = {}) => {
 
 	// Get the exclude path
 	let excludePath = /(node_modules|bower_components)/;
-	if (configuration.excludePath)
+	if (configuration.excludePath && configuration.excludePath.length)
 		excludePath = new RegExp(configuration.excludePath.join('|'), 'i');
+
+	let noopPaths = /(nanana_batmanos)/;
+	if (configuration.noopPaths && configuration.noopPaths.length)
+		noopPaths = new RegExp(configuration.noopPaths.join('|'), 'i');
 
 	const scssPath = path.resolve(configuration.sassPath);
 	const jsPath = path.resolve(configuration.modulePath);
 	const entry = [path.join(path.resolve(jsPath), singleOptions.entry)];
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
-	const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
 
 	const devServerPort = options.devPort || 9090;
 
-	const devProxy = configuration.devProxy || {};
+	const devProxy = configuration.dev.proxy || {};
 	each(devProxy, (value, key) => {
 		let newValue = value;
 		newValue = newValue.replace('{port}', options.port);
@@ -77,7 +82,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				return [
 					precss,
 					autoprefixer({
-						browsers: ['last 2 versions', '> 5%', 'ie 9', 'ie 10', 'ie 11'],
+						browsers: browserSupport,
 					}),
 				];
 			},
@@ -148,6 +153,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 	if (!options.single && !options.production && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
 		entry.unshift('webpack/hot/dev-server');
+		entry.unshift('react-hot-loader/patch');
 		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
 		plugins.push(hmrPlugin);
 		const namedModulesPlugin = new webpack.NamedModulesPlugin();
@@ -184,7 +190,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 		path: path.resolve(configuration.outputPath),
 		chunkFilename: '[name].[id].js',
 		filename: `${singleOptions.exit}.js`,
-		publicPath: configuration.devPath,
+		publicPath: configuration.dev.path,
 	};
 
 	const babelOptions = babelConfig(options);
@@ -207,6 +213,9 @@ module.exports = (options = {}, singleOptions = {}) => {
 			alias: {
 				'custom-sass-lint-loader': path.join(__dirname, '../webpack-loaders/sass-lint-loader'),
 			},
+			modules: [
+				packageNodeModulesPath,
+			],
 		},
 
 		module: {
@@ -224,7 +233,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				loader: 'eslint-loader',
 				options: eslintJson,
 			}, {
-				test: /(\.js|\.jsx)/,
+				test: /(\.js|\.jsx)$/,
 				exclude: excludePath,
 				use: {
 					loader: 'babel-loader',
@@ -245,7 +254,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 				test: /\.css$/,
 				use: cssLoaders,
 			}, {
-				test: /highcharts\/highstock/,
+				test: noopPaths,
 				use: options.production ? 'null-loader' : 'noop-loader',
 			}],
 		},

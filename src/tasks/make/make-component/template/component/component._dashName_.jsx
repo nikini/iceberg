@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+// import autobind from 'autobind-decorator';
 
 // Style
 import './component.<%= dashName %>.scss';

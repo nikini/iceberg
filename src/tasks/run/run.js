@@ -1,11 +1,8 @@
 const cmd = require('../shared/cmd');
 
 // Tasks
-const mavenCompile = require('../watch/maven-compile');
-const cacheClear = require('../watch/cache-clear');
 const webpackRun = require('../webpack/webpack-run');
 const jestStart = require('../jest/jest-start');
-const flowCheck = require('../watch/flow-check');
 const runEslint = require('./run-eslint');
 const tasksLister = require('../watch/tasks-lister');
 
@@ -40,18 +37,6 @@ module.exports = (options = {}) => {
 		runEslint({
 			fix: options.fix,
 		});
-		break;
-
-	case 'cache':
-		cacheClear(false, options.host, options.port, options.silent);
-		break;
-
-	case 'maven-compile':
-		mavenCompile(false, options.silent);
-		break;
-
-	case 'flow-check':
-		flowCheck();
 		break;
 	}
 };

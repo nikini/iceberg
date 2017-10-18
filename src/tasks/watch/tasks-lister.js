@@ -8,14 +8,6 @@ const each = require('lodash/each');
  */
 module.exports = (only = '', property = 'watch') => {
 	const tasks = {
-		cache: {
-			watch: true,
-			run: true,
-		},
-		'maven-compile': {
-			watch: true,
-			run: true,
-		},
 		resources: {
 			watch: true,
 			run: false,
@@ -29,14 +21,6 @@ module.exports = (only = '', property = 'watch') => {
 			run: true,
 		},
 		eslint: {
-			watch: false,
-			run: true,
-		},
-		livereload: {
-			watch: true,
-			run: false,
-		},
-		'flow-check': {
 			watch: false,
 			run: true,
 		},

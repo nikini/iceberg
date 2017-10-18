@@ -18,15 +18,18 @@ module.exports = (options = {}, callback) => {
 		translations: true,
 	};
 
-	webpackRun(translationOptions, (error) => {
-		if (!error)
-			// Copy to target
-			copyPath(configuration.outputPath, configuration.targetPath, configuration.copyPath, options.silent, () => {
-				// Log output
-				cmd.success('Succesfully wrote the translations');
+	if (configuration.translations)
+		webpackRun(translationOptions, (error) => {
+			if (!error)
+				// Copy to target
+				copyPath(configuration.outputPath, configuration.destination, configuration.source, options.silent, () => {
+					// Log output
+					cmd.success('Succesfully wrote the translations');
 
-				if (callback)
-					callback();
-			});
-	});
+					if (callback)
+						callback();
+				});
+		});
+	else
+		callback();
 };
