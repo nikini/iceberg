@@ -15,7 +15,7 @@ const VisualizerPlugin = require('webpack-visualizer-plugin');
 
 const now = require('../tasks/shared/now');
 const getConfig = require('../tasks/shared/get-config');
-const eslintJson = require('../tasks/make/make-other/template/.eslintrc.json');
+const eslintJson = require('../tasks/make/make-application/template/.eslintrc.json');
 const babelConfig = require('./babel-config');
 const browserSupport = require('./browser-support');
 const packageNodeModulesPath = path.join(__dirname, '../../node_modules');
@@ -96,7 +96,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 		options: {
 			sourceMap: true,
 			importer: [jsonImporter],
-			includePaths: [scssPath, jsPath],
+			includePaths: [scssPath, jsPath, nodeModulesPath],
 		},
 	}]);
 
@@ -152,7 +152,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 	// For dev server
 	if (!options.single && !options.production && options.exclude.indexOf('dev-server') < 0) {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
-		entry.unshift('webpack/hot/dev-server');
+		entry.unshift('webpack/hot/only-dev-server');
 		entry.unshift('react-hot-loader/patch');
 		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
 		plugins.push(hmrPlugin);

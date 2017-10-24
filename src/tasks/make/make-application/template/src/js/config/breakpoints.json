@@ -1,0 +1,7 @@
+{
+	"breakpoints": {
+		"desktop-small": 1024,
+		"tablet": 768,
+		"mobile": 480
+	}
+}

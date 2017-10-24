@@ -1,0 +1,39 @@
+{
+	"name": "<%= dashName %>",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"autobind-decorator": "^2.1.0",
+		"include-media": "^1.4.9",
+		"lodash": "4.17.4",
+		"react": "^16.0.0",
+		"react-dom": "^16.0.0",
+		"react-hot-loader": "^3.1.1",
+		"react-redux": "5.0.6",
+		"redux": "3.7.2",
+		"redux-saga": "^0.16.0",
+		"request": "^2.83.0"
+	},
+	"devDependencies": {
+	    "eslint": "3.19.0",
+	    "eslint-config-airbnb": "15.0.2",
+	    "eslint-loader": "^1.9.0",
+	    "eslint-plugin-class-property": "^1.0.6",
+	    "eslint-plugin-import": "^2.7.0",
+	    "eslint-plugin-jsx-a11y": "^5.1.1",
+	    "eslint-plugin-react": "^7.1.0",
+    	"babel-eslint": "^8.0.1",
+		"iceberg-packer": "^0.6.3"
+	},
+	"scripts": {
+		"start": "./node_modules/iceberg-packer/index.js watch",
+		"watch": "./node_modules/iceberg-packer/index.js watch",
+		"test": "./node_modules/iceberg-packer/index.js run eslint && ./node_modules/iceberg-packer/index.js run jest",
+		"build": "./node_modules/iceberg-packer/index.js build",
+		"i18n": "./node_modules/iceberg-packer/index.js i18n"
+	},
+	"engines": {
+		"node": ">=8.5.0",
+		"npm": ">=5.4.1"
+	}
+}

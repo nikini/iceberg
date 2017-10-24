@@ -1,16 +1,16 @@
 {
 	"v2": {
-		"name": "<%= name %>",
+		"name": "<%= dashName %>",
 		"sassPath": "src/scss",
 		"modulePath": "src/js",
 		"watchPaths": [
-			"src/**/*",
+			"src/**/*"
 		],
 		"excludePath": [],
 		"noopPaths": [],
 		"entries": [{
 			"name": "Main",
-			"entry": "<%= entry %>",
+			"entry": "index.js",
 			"exit": "[name].bundle"
 		}],
 		"outputPath": "bundles",
@@ -38,6 +38,7 @@
 		"plugins": {},
 		"make": {
 			"prefix": ""
-		}
+		},
+		"aliases": {}
 	}
 }

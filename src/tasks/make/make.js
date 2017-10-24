@@ -1,8 +1,7 @@
 const cmd = require('../shared/cmd');
 const makeComponent = require('./make-component/make-component');
-const makeOther = require('./make-other/make-other');
-const makeConfig = require('./make-config/make-config');
 const makePropType = require('./make-prop-type/make-prop-type');
+const makeApplication = require('./make-application/make-application');
 
 /**
  * Scaffold something
@@ -11,7 +10,7 @@ const makePropType = require('./make-prop-type/make-prop-type');
  * @param  {string} name
  */
 module.exports = (type = '', name = '') => {
-	const supported = ['component', 'prop-type', 'config', 'lint-files'];
+	const supported = ['component', 'prop-type', 'application'];
 	if (!type) {
 		cmd.error('Please specify a type. Use --help if you are confused.');
 		return;
@@ -28,12 +27,6 @@ module.exports = (type = '', name = '') => {
 	if (type === 'prop-type')
 		makePropType(name);
 
-	if (type === 'config')
-		makeConfig(name);
-
-	if (type === 'lint-files')
-		makeOther({
-			name,
-			exclude: ['.iceConfig.json'],
-		});
+	if (type === 'application')
+		makeApplication(name);
 };

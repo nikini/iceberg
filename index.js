@@ -5,8 +5,6 @@ const run = require('./src/tasks/run/run');
 const make = require('./src/tasks/make/make');
 const build = require('./src/tasks/build/build');
 const generateTranslations = require('./src/tasks/generate-translations/generate-translations');
-const init = require('./src/tasks/init/init');
-const remove = require('./src/tasks/remove/remove');
 const currentPackage = require('./package.json');
 const tasksLister = require('./src/tasks/watch/tasks-lister');
 
@@ -92,10 +90,9 @@ program
 		console.log();
 		console.log('    $ iceberg make common/visualization -t component');
 		console.log('    $ iceberg make highcharts --type component');
-		console.log('    $ iceberg make -t lint-files');
 		console.log('    $ iceberg make common/visualization/chart-options -t prop-type');
 		console.log();
-		console.log('  For type you can use: [component, prop-type, config, lint-files]');
+		console.log('  For type you can use: [component, prop-type]');
 		console.log();
 	});
 
@@ -109,7 +106,7 @@ program
 	});
 
 program
-	.command('i18n')
+	.command('i18n [bundle]')
 	.description('Generates the i18n file')
 	.action((bundle) => {
 		generateTranslations({
@@ -118,17 +115,10 @@ program
 	});
 
 program
-	.command('init')
-	.description('Initializes iceberg in the current project (must have a package.json)')
-	.action(() => {
-		init();
-	});
-
-program
-	.command('remove')
-	.description('Removes iceberg from the current project (must have a package.json)')
-	.action(() => {
-		remove();
+	.command('init [project]')
+	.description('Creates an application in the [project] folder')
+	.action((project) => {
+		make('application', project);
 	});
 
 program.parse(process.argv);

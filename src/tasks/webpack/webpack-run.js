@@ -45,7 +45,9 @@ module.exports = (options = {}, onComplete) => {
 				onComplete(err);
 		});
 	else {
+		WebpackDevServer.addDevServerEntrypoints(selectedConfig, selectedConfig.devServer);
 		const server = new WebpackDevServer(compiler, selectedConfig.devServer);
+
 		server.listen(selectedConfig.devServer.port, 'localhost', () => {
 			console.log('');
 			cmd.log(`Starting dev server on http://localhost:${selectedConfig.devServer.port}`);

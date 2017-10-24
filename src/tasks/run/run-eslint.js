@@ -2,7 +2,7 @@ const cmd = require('../shared/cmd');
 const CLIEngine = require('eslint').CLIEngine;
 
 const getConfig = require('../shared/get-config');
-const eslintJson = require('../make/make-other/template/.eslintrc.json');
+const eslintJson = require('../make/make-application/template/.eslintrc.json');
 
 /**
  * Run eslint only once
