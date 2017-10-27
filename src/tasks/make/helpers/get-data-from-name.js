@@ -4,6 +4,7 @@ const classify = require('underscore.string/classify');
 const humanize = require('underscore.string/humanize');
 const trim = require('underscore.string/trim');
 const last = require('lodash/last');
+const packageJson = require('../../../../package.json');
 
 /**
  * Function that spits out all the information about the file
@@ -27,5 +28,6 @@ module.exports = (name) => {
 		dirName,
 		camelCaseName,
 		className,
+		packageJsonVersion: packageJson.version,
 	};
 };
