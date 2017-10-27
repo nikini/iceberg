@@ -1,22 +1,17 @@
 /* global describe, it, expect, beforeEach */
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
 
-import App from './component.app';
+import Home from './component.home';
 
-describe('<App>', () => {
-	const props = {
-		// ...
-	};
+describe('<Home>', () => {
+	const props = {};
 
 	let component;
 
 	beforeEach(() => {
 		component = mount(
-			<MemoryRouter>
-				<App {...props} />
-			</MemoryRouter>
+			<Home {...props} />
 		);
 	});
 
@@ -25,6 +20,6 @@ describe('<App>', () => {
 	 */
 
 	it('should render component', () => {
-		expect(component.find('.app').length).toEqual(1);
+		expect(component.find('.home').length).toEqual(1);
 	});
 });

@@ -1,5 +1,10 @@
+@import 'bootstrap/dist/css/bootstrap.css';
 @import 'base';
 
 .app {
 	display: block;
+
+	main {
+		padding: 1rem 0;
+	}
 }

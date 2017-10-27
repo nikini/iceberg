@@ -3,19 +3,17 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-import App from './component.app';
+import Header from './component.header';
 
-describe('<App>', () => {
-	const props = {
-		// ...
-	};
+describe('<Header>', () => {
+	const props = {};
 
 	let component;
 
 	beforeEach(() => {
 		component = mount(
 			<MemoryRouter>
-				<App {...props} />
+				<Header {...props} />
 			</MemoryRouter>
 		);
 	});
@@ -25,6 +23,6 @@ describe('<App>', () => {
 	 */
 
 	it('should render component', () => {
-		expect(component.find('.app').length).toEqual(1);
+		expect(component.find('.header').length).toEqual(1);
 	});
 });

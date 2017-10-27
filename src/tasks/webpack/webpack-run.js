@@ -4,6 +4,7 @@ const isArray = require('lodash/isArray');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const getWebpackConfig = require('./get-webpack-config');
+const openurl = require('openurl');
 
 /**
  * Starts the webpack watch
@@ -50,6 +51,7 @@ module.exports = (options = {}, onComplete) => {
 
 		server.listen(selectedConfig.devServer.port, 'localhost', () => {
 			cmd.log(`Starting dev server on http://localhost:${selectedConfig.devServer.port}`);
+			openurl.open(`http://localhost:${selectedConfig.devServer.port}`);
 		});
 	}
 };

@@ -1,6 +1,6 @@
 {
   "name": "iceberg-packer",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -7279,6 +7279,11 @@
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/onetime/-/onetime-1.1.0.tgz",
       "integrity": "sha1-ofeDj4MUxRbwXs78vEzP4EtO14k="
+    },
+    "openurl": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/openurl/-/openurl-1.1.1.tgz",
+      "integrity": "sha1-OHW0sO96UsFW8NtB1GCduw+Us4c="
     },
     "opn": {
       "version": "5.1.0",

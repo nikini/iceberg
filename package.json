@@ -1,6 +1,6 @@
 {
   "name": "iceberg-packer",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Iceberg Tools for the command line",
   "main": "index.js",
   "scripts": {},
@@ -48,6 +48,7 @@
     "node-notifier": "^5.1.2",
     "node-sass": "^4.5.3",
     "node-sass-json-importer": "^3.0.2",
+    "openurl": "^1.1.1",
     "postcss-loader": "^2.0.8",
     "precss": "^2.0.0",
     "progress-bar-webpack-plugin": "^1.10.0",

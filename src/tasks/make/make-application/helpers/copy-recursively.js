@@ -5,10 +5,12 @@ const template = require('lodash/template');
 
 module.exports = function copyRecursively(projectPath, data, templateDir) {
 	shell.ls('-A', templateDir).forEach((filename) => {
+		const newName = filename.replace(/__\.__/ig, '.');
+
 		// Count the operation
 		cmd.runCountLog(() => {
 			const templateConfigFile = path.join(templateDir, filename);
-			const filePath = path.join(projectPath, filename);
+			const filePath = path.join(projectPath, newName);
 
 			if (shell.test('-d', templateConfigFile)) {
 				shell.mkdir('-p', filePath);
@@ -23,7 +25,7 @@ module.exports = function copyRecursively(projectPath, data, templateDir) {
 			const fileContents = shell.ShellString(compiledTemplate(data));
 			fileContents.to(filePath);
 		}, 'Created the file {file} in {duration}', {
-			file: filename,
+			file: newName,
 		});
 	});
 };

@@ -1,6 +1,7 @@
 const camelize = require('underscore.string/camelize');
 const dasherize = require('underscore.string/dasherize');
 const classify = require('underscore.string/classify');
+const humanize = require('underscore.string/humanize');
 const trim = require('underscore.string/trim');
 const last = require('lodash/last');
 
@@ -16,10 +17,12 @@ module.exports = (name) => {
 	const dashName = trim(dasherize(folderName), '-');
 	const camelCaseName = camelize(dashName);
 	const className = classify(dashName);
+	const humanName = humanize(className);
 	const dirName = dashName;
 
 	return {
 		name: folderName,
+		humanName,
 		dashName,
 		dirName,
 		camelCaseName,
