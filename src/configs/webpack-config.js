@@ -45,7 +45,7 @@ module.exports = (options = {}, singleOptions = {}) => {
 	const entry = [path.join(path.resolve(jsPath), singleOptions.entry)];
 	const nodeModulesPath = path.join(process.cwd(), 'node_modules');
 
-	const devServerPort = options.devPort || 9090;
+	const devServerPort = options.devPort || configuration.dev.port || 9090;
 
 	const devProxy = configuration.dev.proxy || {};
 	each(devProxy, (value, key) => {
@@ -154,10 +154,10 @@ module.exports = (options = {}, singleOptions = {}) => {
 		entry.unshift(`webpack-dev-server/client?http://localhost:${devServerPort}`);
 		entry.unshift('webpack/hot/only-dev-server');
 		entry.unshift('react-hot-loader/patch');
-		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
-		plugins.push(hmrPlugin);
 		const namedModulesPlugin = new webpack.NamedModulesPlugin();
 		plugins.push(namedModulesPlugin);
+		const hmrPlugin = new webpack.HotModuleReplacementPlugin();
+		plugins.push(hmrPlugin);
 	}
 
 	// Output extracted CSS to a file
@@ -277,6 +277,9 @@ module.exports = (options = {}, singleOptions = {}) => {
 			compress: true,
 			port: devServerPort,
 			proxy: devProxy,
+			contentBase: configuration.dev.contentBase ? path.join(process.cwd(), configuration.dev.contentBase) : false,
+			publicPath: configuration.dev.path,
+
 			stats: {
 				assets: false,
 				chunks: false,

@@ -2,6 +2,9 @@ const babelConfig = require('../../configs/babel-config');
 
 const babelConfigObject = babelConfig({
 	single: true,
+	test: true,
 });
 
-module.exports = require('babel-jest').createTransformer(babelConfigObject);
+const transformer = require('babel-jest').createTransformer(babelConfigObject);
+
+module.exports = transformer;

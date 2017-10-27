@@ -37,6 +37,7 @@ module.exports = (options = {}) => {
 				targets: {
 					browsers: browserSupport,
 				},
+				modules: options.test ? 'commonjs' : false,
 			}],
 		],
 		comments: false,

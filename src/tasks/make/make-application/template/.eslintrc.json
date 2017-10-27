@@ -5,6 +5,7 @@
 		"react"
 	],
 	"overrides": [{
+		"files": [ "src/*.js", "src/*.jsx" ],
 		"excludedFiles": "*.bundle.js"
 	}],
 	"extends": "airbnb",

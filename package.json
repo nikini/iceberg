@@ -1,6 +1,6 @@
 {
   "name": "iceberg-packer",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Iceberg Tools for the command line",
   "main": "index.js",
   "scripts": {},

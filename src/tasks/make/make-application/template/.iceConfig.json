@@ -10,12 +10,14 @@
 		"noopPaths": [],
 		"entries": [{
 			"name": "Main",
-			"entry": "index.js",
-			"exit": "[name].bundle"
+			"entry": "index.jsx",
+			"exit": "main.bundle"
 		}],
 		"outputPath": "bundles",
 		"dev": {
-			"path": "bundles",
+			"path": "/bundles/",
+			"contentBase": "./public",
+			"port": 3000,
 			"proxy": {}
 		},
 		"alias": {},
@@ -23,17 +25,11 @@
 			"watchPaths": [
 				"src/**/*"
 			],
-			"coverageCollection": [],
-			"minimumCoverage": {
-				"branches": 90,
-				"functions": 100,
-				"lines": 95,
-				"statements": 90
-			}
+			"coverageCollection": false
 		},
 		"translations": {
-			"regexp": "",
-			"file": ""
+			"regexp": "\\bt\\b\\((?:'|\"|`)(.[^\\']*)(?:'|\"|`)\\s?(?:\\)|{|,)",
+			"file": "config/i18n-expressions.json"
 		},
 		"plugins": {},
 		"make": {

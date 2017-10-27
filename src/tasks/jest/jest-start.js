@@ -33,7 +33,7 @@ module.exports = (options = {}) => {
 			],
 			watch: false,
 			verbose: true,
-			collectCoverage: true,
+			collectCoverage: Boolean(configuration.tests.coverageCollection),
 			collectCoverageFrom: options.hideFullCoverage ? false : configuration.tests.coverageCollection,
 			setupFiles: [
 				path.resolve(__dirname, 'jest-shim'),
@@ -46,7 +46,7 @@ module.exports = (options = {}) => {
 				'\\.(css|scss)$': 'identity-obj-proxy',
 			},
 			coverageThreshold: {
-				global: configuration.tests.minimumCoverage,
+				global: configuration.tests.minimumCoverage || {},
 			},
 			coverageReporters: ['text'],
 		},
